@@ -8,6 +8,8 @@
     <class>com.javaexpress.model.Pengiriman</class>
     <class>com.javaexpress.model.Admin</class>
     <class>com.javaexpress.model.Provinsi</class>
+    <class>com.javaexpress.model.Status</class>
+    <class>com.javaexpress.model.LevelAdmin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/courier_db?zeroDateTimeBehavior=convertToNull"/>
