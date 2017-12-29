@@ -1,21 +1,29 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to Spring Web MVC project</title>
+        <meta name="theme-color" content="#e34c4c">
+        <title>Java Express</title>
     </head>
 
     <body>
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <p><i>To display a different welcome page for this project, modify</i>
-            <tt>index.jsp</tt> <i>, or create your own welcome page then change
-                the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new
-                welcome page and also update the welcome-file setting in</i>
-            <tt>web.xml</tt>.
-            <b>${data.nama_admin}</b>
-        </p>
+        <h1>Form Login</h1>
+        <form:form action="${pageContext.request.contextPath}/home/check" modelAttribute="loginBean" method="POST" >
+            <form:label path="username">Username</form:label>
+            <form:input path="username" required="true"></form:input><br/>
+            <form:label path="password">Password</form:label>
+            <form:password path="password" required="true"></form:password><br/>
+            <form:label path="level">Level</form:label>
+            <form:select path="level">
+                <form:option value="1">1</form:option>
+                <form:option value="2">2</form:option>
+            </form:select><br/>
+            <form:button name="submitButton" value="Submit">LOGIN</form:button>
+        </form:form>
+              <b>${errMsg}</b>
     </body>
 </html>
