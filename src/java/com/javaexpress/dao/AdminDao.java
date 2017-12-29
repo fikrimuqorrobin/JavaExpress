@@ -2,6 +2,7 @@ package com.javaexpress.dao;
 
 import com.javaexpress.model.Admin;
 import com.javaexpress.model.LevelAdmin;
+import com.javaexpress.model.Status;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -37,6 +38,19 @@ public class AdminDao {
         this.em = em;
     }
     
+    @org.springframework.transaction.annotation.Transactional
+    public void saveAdmin(Admin admin) {
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(admin);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
+    public Admin findAdminById(Integer id){
+        em = emf.createEntityManager();
+        return em.find(Admin.class, id);
+    }
     
     public Admin findByUsername(String username) {
         Admin admin = new Admin();
@@ -63,4 +77,15 @@ public class AdminDao {
         return em.find(LevelAdmin.class, id);
     }
     
+    public Status findStatusById(Integer id){
+        em = emf.createEntityManager();
+        return em.find(Status.class, id);
+    }
+    
+    public List<Admin> findAllStaff(){
+        em = emf.createEntityManager();
+        List<Admin> staff;
+        staff = em.createQuery("select a from Admin a where a.level.idLevel = 2").getResultList();
+        return staff;
+    }
 }

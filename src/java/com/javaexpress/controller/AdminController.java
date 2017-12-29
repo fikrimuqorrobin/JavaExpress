@@ -1,10 +1,12 @@
 package com.javaexpress.controller;
 
 import com.javaexpress.bean.LoginBean;
+import com.javaexpress.bean.RegisterStaffBean;
 import com.javaexpress.dao.AdminDao;
 import com.javaexpress.model.Admin;
 import com.javaexpress.model.LevelAdmin;
 import com.javaexpress.utils.PasswordDigest;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +72,43 @@ public class AdminController {
         return "redirect:/home";
     }
     
+    @RequestMapping("/staff")
+    public String dataStaff(Model model){
+        List<Admin> staff = ad.findAllStaff();
+        model.addAttribute("staff", staff);
+        return "dataStaff";
+    }
+        
+    @RequestMapping("/input/staff") 
+    public String registerForm(Model model) {
+        RegisterStaffBean registerBean = new RegisterStaffBean();
+        List<LevelAdmin> levels = ad.tampilLevelAdmin();
+        model.addAttribute("level", levels);
+        model.addAttribute("registerBean", registerBean);
+        return "registerStaff";
+    }
     
+    @RequestMapping("/input/staff/save") 
+    public String saveRegistration(HttpSession session, @ModelAttribute("registerBean") RegisterStaffBean registerBean, 
+            Model model) {
+        Admin admin = new Admin();
+        Admin master = (Admin) session.getAttribute("admin");
+        
+        String encryptedPassword = PasswordDigest.createEncryptedPassword(registerBean.getPassword());
+        
+        admin.setNamaLengkap(registerBean.getNama());
+        admin.setUsername(registerBean.getUsername());
+        admin.setPassword(encryptedPassword);
+        admin.setLevel(ad.findLevelById(registerBean.getLevel()));
+        admin.setCreatedBy(master);
+        admin.setUpdatedBy(master);
+        admin.setCreatedTime(new Date());
+        admin.setUpdatedTime(new Date());
+        admin.setStatus(ad.findStatusById(1));
+        ad.saveAdmin(admin);
+        model.addAttribute("data", registerBean);
+        return "successRegister";
+    }
     
     
 }

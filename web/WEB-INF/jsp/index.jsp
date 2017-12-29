@@ -1,3 +1,11 @@
+<% 
+    if(session.getAttribute("admin") == null) { 
+%>
+
+<jsp:include flush="true" page="login.jsp"></jsp:include>
+
+<% } else { %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,25 +15,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="theme-color" content="#e34c4c">
         <title>Java Express</title>
     </head>
 
     <body>
-        <h1>Form Login</h1>
-        <form:form action="${pageContext.request.contextPath}/home/check" modelAttribute="loginBean" method="POST" >
-            <form:label path="username">Username</form:label>
-            <form:input path="username" required="true"></form:input><br/>
-            <form:label path="password">Password</form:label>
-            <form:password path="password" required="true"></form:password><br/>
-            <form:label path="level">Level</form:label>
-            <form:select path="level">
-                <c:forEach var="lvl" items="${level}">
-                    <form:option value="${lvl.getIdLevel()}">${lvl.getLevel()}</form:option>
-                </c:forEach>
-            </form:select><br/>
-            <form:button name="submitButton" value="Submit">LOGIN</form:button>
-        </form:form>
-              <b>${errMsg}</b>
+        <h1>Home</h1>
+        <jsp:include page="menu.jsp"></jsp:include>
     </body>
 </html>
+
+<% } %>
