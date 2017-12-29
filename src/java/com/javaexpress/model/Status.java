@@ -6,6 +6,7 @@
 package com.javaexpress.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,10 +15,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,6 +38,25 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Status.findByIdStatus", query = "SELECT s FROM Status s WHERE s.idStatus = :idStatus")
     , @NamedQuery(name = "Status.findByStatus", query = "SELECT s FROM Status s WHERE s.status = :status")})
 public class Status implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
+    private List<Admin> adminList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
+    private List<LevelAdmin> levelAdminList;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -150,6 +174,56 @@ public class Status implements Serializable {
     @Override
     public String toString() {
         return "com.javaexpress.model.Status[ idStatus=" + idStatus + " ]";
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    @XmlTransient
+    public List<Admin> getAdminList() {
+        return adminList;
+    }
+
+    public void setAdminList(List<Admin> adminList) {
+        this.adminList = adminList;
+    }
+
+    @XmlTransient
+    public List<LevelAdmin> getLevelAdminList() {
+        return levelAdminList;
+    }
+
+    public void setLevelAdminList(List<LevelAdmin> levelAdminList) {
+        this.levelAdminList = levelAdminList;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
     }
     
 }

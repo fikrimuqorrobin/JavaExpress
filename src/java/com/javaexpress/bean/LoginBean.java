@@ -13,7 +13,7 @@ public class LoginBean {
     
     private String username;
     private String password;
-    private String level;
+    private int level;
 
     /**
      * @return the username
@@ -46,14 +46,14 @@ public class LoginBean {
     /**
      * @return the level
      */
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
     /**
      * @param level the level to set
      */
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
     }
     

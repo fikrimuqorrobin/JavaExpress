@@ -6,6 +6,7 @@
 package com.javaexpress.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -37,6 +40,36 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a WHERE a.username = :username")
     , @NamedQuery(name = "Admin.findByNamaLengkap", query = "SELECT a FROM Admin a WHERE a.namaLengkap = :namaLengkap")})
 public class Admin implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Admin> adminList;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Admin> adminList1;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<LevelAdmin> levelAdminList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<LevelAdmin> levelAdminList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Status> statusList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Status> statusList1;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -245,6 +278,100 @@ public class Admin implements Serializable {
     @Override
     public String toString() {
         return "com.javaexpress.model.Admin[ idAdmin=" + idAdmin + " ]";
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public List<Admin> getAdminList() {
+        return adminList;
+    }
+
+    public void setAdminList(List<Admin> adminList) {
+        this.adminList = adminList;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @XmlTransient
+    public List<Admin> getAdminList1() {
+        return adminList1;
+    }
+
+    public void setAdminList1(List<Admin> adminList1) {
+        this.adminList1 = adminList1;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    @XmlTransient
+    public List<LevelAdmin> getLevelAdminList() {
+        return levelAdminList;
+    }
+
+    public void setLevelAdminList(List<LevelAdmin> levelAdminList) {
+        this.levelAdminList = levelAdminList;
+    }
+
+    @XmlTransient
+    public List<LevelAdmin> getLevelAdminList1() {
+        return levelAdminList1;
+    }
+
+    public void setLevelAdminList1(List<LevelAdmin> levelAdminList1) {
+        this.levelAdminList1 = levelAdminList1;
+    }
+
+    @XmlTransient
+    public List<Status> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<Status> statusList) {
+        this.statusList = statusList;
+    }
+
+    @XmlTransient
+    public List<Status> getStatusList1() {
+        return statusList1;
+    }
+
+    public void setStatusList1(List<Status> statusList1) {
+        this.statusList1 = statusList1;
     }
     
 }
