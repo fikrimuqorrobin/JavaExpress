@@ -7,6 +7,7 @@ package com.javaexpress.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -22,6 +23,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -46,7 +49,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Pengiriman.findByHargaBarang", query = "SELECT p FROM Pengiriman p WHERE p.hargaBarang = :hargaBarang")
     , @NamedQuery(name = "Pengiriman.findByJenisLayanan", query = "SELECT p FROM Pengiriman p WHERE p.jenisLayanan = :jenisLayanan")
     , @NamedQuery(name = "Pengiriman.findByTotalTarif", query = "SELECT p FROM Pengiriman p WHERE p.totalTarif = :totalTarif")
-    , @NamedQuery(name = "Pengiriman.findByNoResi", query = "SELECT p FROM Pengiriman p WHERE p.noResi = :noResi")})
+    , @NamedQuery(name = "Pengiriman.findByNoResi", query = "SELECT p FROM Pengiriman p WHERE p.noResi = :noResi")
+    , @NamedQuery(name = "Pengiriman.findByCreatedTime", query = "SELECT p FROM Pengiriman p WHERE p.createdTime = :createdTime")
+    , @NamedQuery(name = "Pengiriman.findByUpdatedTime", query = "SELECT p FROM Pengiriman p WHERE p.updatedTime = :updatedTime")})
 public class Pengiriman implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -98,6 +103,14 @@ public class Pengiriman implements Serializable {
     @Basic(optional = false)
     @Column(name = "no_resi")
     private String noResi;
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
     @JoinColumn(name = "kota_pengirim", referencedColumnName = "kode_kota")
     @ManyToOne(optional = false)
     private Kota kotaPengirim;
@@ -107,6 +120,15 @@ public class Pengiriman implements Serializable {
     @JoinColumn(name = "tarif", referencedColumnName = "id_tarif")
     @ManyToOne(optional = false)
     private Tarif tarif;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "kodePengiriman")
     private List<Tracking> trackingList;
 
@@ -117,7 +139,7 @@ public class Pengiriman implements Serializable {
         this.idPengiriman = idPengiriman;
     }
 
-    public Pengiriman(Integer idPengiriman, String namaPengirim, String teleponPengirim, String alamatPengirim, String namaPenerima, String teleponPenerima, String alamatPenerima, String tipePaket, String namaPaket, int beratBarang, String jenisLayanan, BigDecimal totalTarif, String noResi) {
+    public Pengiriman(Integer idPengiriman, String namaPengirim, String teleponPengirim, String alamatPengirim, String namaPenerima, String teleponPenerima, String alamatPenerima, String tipePaket, String namaPaket, int beratBarang, String jenisLayanan, BigDecimal totalTarif, String noResi, Date createdTime, Date updatedTime) {
         this.idPengiriman = idPengiriman;
         this.namaPengirim = namaPengirim;
         this.teleponPengirim = teleponPengirim;
@@ -131,6 +153,8 @@ public class Pengiriman implements Serializable {
         this.jenisLayanan = jenisLayanan;
         this.totalTarif = totalTarif;
         this.noResi = noResi;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public Integer getIdPengiriman() {
@@ -253,6 +277,22 @@ public class Pengiriman implements Serializable {
         this.noResi = noResi;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     public Kota getKotaPengirim() {
         return kotaPengirim;
     }
@@ -275,6 +315,30 @@ public class Pengiriman implements Serializable {
 
     public void setTarif(Tarif tarif) {
         this.tarif = tarif;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @XmlTransient
@@ -308,7 +372,7 @@ public class Pengiriman implements Serializable {
 
     @Override
     public String toString() {
-        return "com.muqorrobin.model.Pengiriman[ idPengiriman=" + idPengiriman + " ]";
+        return "com.javaexpress.model.Pengiriman[ idPengiriman=" + idPengiriman + " ]";
     }
     
 }

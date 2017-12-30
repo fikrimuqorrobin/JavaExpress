@@ -7,6 +7,7 @@ package com.javaexpress.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,11 +37,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Tarif.findAll", query = "SELECT t FROM Tarif t")
     , @NamedQuery(name = "Tarif.findByIdTarif", query = "SELECT t FROM Tarif t WHERE t.idTarif = :idTarif")
+    , @NamedQuery(name = "Tarif.findByKotaAsal", query = "SELECT t FROM Tarif t WHERE t.kotaAsal = :kotaAsal")
+    , @NamedQuery(name = "Tarif.findByKotaTujuan", query = "SELECT t FROM Tarif t WHERE t.kotaTujuan = :kotaTujuan")
     , @NamedQuery(name = "Tarif.findByReguler", query = "SELECT t FROM Tarif t WHERE t.reguler = :reguler")
     , @NamedQuery(name = "Tarif.findByKilat", query = "SELECT t FROM Tarif t WHERE t.kilat = :kilat")
     , @NamedQuery(name = "Tarif.findByOns", query = "SELECT t FROM Tarif t WHERE t.ons = :ons")
     , @NamedQuery(name = "Tarif.findBySds", query = "SELECT t FROM Tarif t WHERE t.sds = :sds")
-    , @NamedQuery(name = "Tarif.findByHds", query = "SELECT t FROM Tarif t WHERE t.hds = :hds")})
+    , @NamedQuery(name = "Tarif.findByHds", query = "SELECT t FROM Tarif t WHERE t.hds = :hds")
+    , @NamedQuery(name = "Tarif.findByCreatedTime", query = "SELECT t FROM Tarif t WHERE t.createdTime = :createdTime")
+    , @NamedQuery(name = "Tarif.findByUpdatedTime", query = "SELECT t FROM Tarif t WHERE t.updatedTime = :updatedTime")})
 public class Tarif implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +54,12 @@ public class Tarif implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tarif")
     private Integer idTarif;
+    @Basic(optional = false)
+    @Column(name = "kota_asal")
+    private int kotaAsal;
+    @Basic(optional = false)
+    @Column(name = "kota_tujuan")
+    private int kotaTujuan;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "reguler")
@@ -63,14 +76,25 @@ public class Tarif implements Serializable {
     @Basic(optional = false)
     @Column(name = "hds")
     private BigDecimal hds;
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarif")
     private List<Pengiriman> pengirimanList;
-    @JoinColumn(name = "kota_asal", referencedColumnName = "kode_kota")
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
     @ManyToOne(optional = false)
-    private Kota kotaAsal;
-    @JoinColumn(name = "kota_tujuan", referencedColumnName = "kode_kota")
+    private Status status;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
     @ManyToOne(optional = false)
-    private Kota kotaTujuan;
+    private Admin createdBy;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
 
     public Tarif() {
     }
@@ -78,14 +102,18 @@ public class Tarif implements Serializable {
     public Tarif(Integer idTarif) {
         this.idTarif = idTarif;
     }
-
-    public Tarif(Integer idTarif, BigDecimal reguler, BigDecimal kilat, BigDecimal ons, BigDecimal sds, BigDecimal hds) {
+    
+    public Tarif(Integer idTarif, int kotaAsal, int kotaTujuan, BigDecimal reguler, BigDecimal kilat, BigDecimal ons, BigDecimal sds, BigDecimal hds, Date createdTime, Date updatedTime) {
         this.idTarif = idTarif;
+        this.kotaAsal = kotaAsal;
+        this.kotaTujuan = kotaTujuan;
         this.reguler = reguler;
         this.kilat = kilat;
         this.ons = ons;
         this.sds = sds;
         this.hds = hds;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public Integer getIdTarif() {
@@ -94,6 +122,22 @@ public class Tarif implements Serializable {
 
     public void setIdTarif(Integer idTarif) {
         this.idTarif = idTarif;
+    }
+
+    public int getKotaAsal() {
+        return kotaAsal;
+    }
+
+    public void setKotaAsal(int kotaAsal) {
+        this.kotaAsal = kotaAsal;
+    }
+
+    public int getKotaTujuan() {
+        return kotaTujuan;
+    }
+
+    public void setKotaTujuan(int kotaTujuan) {
+        this.kotaTujuan = kotaTujuan;
     }
 
     public BigDecimal getReguler() {
@@ -136,6 +180,22 @@ public class Tarif implements Serializable {
         this.hds = hds;
     }
 
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     @XmlTransient
     public List<Pengiriman> getPengirimanList() {
         return pengirimanList;
@@ -145,20 +205,28 @@ public class Tarif implements Serializable {
         this.pengirimanList = pengirimanList;
     }
 
-    public Kota getKotaAsal() {
-        return kotaAsal;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setKotaAsal(Kota kotaAsal) {
-        this.kotaAsal = kotaAsal;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
-    public Kota getKotaTujuan() {
-        return kotaTujuan;
+    public Admin getCreatedBy() {
+        return createdBy;
     }
 
-    public void setKotaTujuan(Kota kotaTujuan) {
-        this.kotaTujuan = kotaTujuan;
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override
@@ -183,7 +251,7 @@ public class Tarif implements Serializable {
 
     @Override
     public String toString() {
-        return "com.muqorrobin.model.Tarif[ idTarif=" + idTarif + " ]";
+        return "com.javaexpress.model.Tarif[ idTarif=" + idTarif + " ]";
     }
     
 }

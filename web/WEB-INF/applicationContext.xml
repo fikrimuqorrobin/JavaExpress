@@ -16,19 +16,17 @@
     <bean id="emf"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceUnitName" value="WebBiasaPU"></property>
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>            
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
     </bean>
     
     <bean id="jpaVendorAdapter"
-          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">        
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="org.hibernate.dialect.DerbyDialect"/>
         <property name="showSql" value="true" />
-    </bean>	
+    </bean>
     
     <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="emf" />
     </bean>
     <tx:annotation-driven transaction-manager="txManager" />
-
-
 </beans>

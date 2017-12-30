@@ -32,8 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Tracking.findAll", query = "SELECT t FROM Tracking t")
     , @NamedQuery(name = "Tracking.findByIdTracking", query = "SELECT t FROM Tracking t WHERE t.idTracking = :idTracking")
-    , @NamedQuery(name = "Tracking.findByStatus", query = "SELECT t FROM Tracking t WHERE t.status = :status")
-    , @NamedQuery(name = "Tracking.findByTglUpdate", query = "SELECT t FROM Tracking t WHERE t.tglUpdate = :tglUpdate")})
+    , @NamedQuery(name = "Tracking.findByStatusPengiriman", query = "SELECT t FROM Tracking t WHERE t.statusPengiriman = :statusPengiriman")
+    , @NamedQuery(name = "Tracking.findByCreatedTime", query = "SELECT t FROM Tracking t WHERE t.createdTime = :createdTime")
+    , @NamedQuery(name = "Tracking.findByUpdateTime", query = "SELECT t FROM Tracking t WHERE t.updateTime = :updateTime")})
 public class Tracking implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,15 +44,28 @@ public class Tracking implements Serializable {
     @Column(name = "id_tracking")
     private Integer idTracking;
     @Basic(optional = false)
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status_pengiriman")
+    private String statusPengiriman;
     @Basic(optional = false)
-    @Column(name = "tgl_update")
+    @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date tglUpdate;
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "update_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updateTime;
     @JoinColumn(name = "kode_pengiriman", referencedColumnName = "id_pengiriman")
     @ManyToOne(optional = false)
     private Pengiriman kodePengiriman;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
 
     public Tracking() {
     }
@@ -60,10 +74,11 @@ public class Tracking implements Serializable {
         this.idTracking = idTracking;
     }
 
-    public Tracking(Integer idTracking, String status, Date tglUpdate) {
+    public Tracking(Integer idTracking, String statusPengiriman, Date createdTime, Date updateTime) {
         this.idTracking = idTracking;
-        this.status = status;
-        this.tglUpdate = tglUpdate;
+        this.statusPengiriman = statusPengiriman;
+        this.createdTime = createdTime;
+        this.updateTime = updateTime;
     }
 
     public Integer getIdTracking() {
@@ -74,20 +89,28 @@ public class Tracking implements Serializable {
         this.idTracking = idTracking;
     }
 
-    public String getStatus() {
-        return status;
+    public String getStatusPengiriman() {
+        return statusPengiriman;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusPengiriman(String statusPengiriman) {
+        this.statusPengiriman = statusPengiriman;
     }
 
-    public Date getTglUpdate() {
-        return tglUpdate;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setTglUpdate(Date tglUpdate) {
-        this.tglUpdate = tglUpdate;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Pengiriman getKodePengiriman() {
@@ -96,6 +119,30 @@ public class Tracking implements Serializable {
 
     public void setKodePengiriman(Pengiriman kodePengiriman) {
         this.kodePengiriman = kodePengiriman;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override
@@ -120,7 +167,7 @@ public class Tracking implements Serializable {
 
     @Override
     public String toString() {
-        return "com.muqorrobin.model.Tracking[ idTracking=" + idTracking + " ]";
+        return "com.javaexpress.model.Tracking[ idTracking=" + idTracking + " ]";
     }
     
 }
