@@ -9,6 +9,7 @@ import com.javaexpress.model.Admin;
 import com.javaexpress.model.Kota;
 import com.javaexpress.model.Status;
 import com.javaexpress.model.Tarif;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -46,6 +47,7 @@ public class TarifDao {
         em = emf.createEntityManager();
         List<Tarif> trf;
         trf = em.createNamedQuery("Tarif.findAll").getResultList();
+        em.close();
         return trf;
     }
     
@@ -53,6 +55,7 @@ public class TarifDao {
         em = emf.createEntityManager();
         List<Kota> kota;
         kota = em.createNamedQuery("Kota.findAll").getResultList();
+        em.close();
         return kota;
     }
     
@@ -62,6 +65,7 @@ public class TarifDao {
         Query query = em.createNamedQuery("Admin.findByIdAdmin");
         query.setParameter("idAdmin", idAdmin);
         admin = (Admin) query.getSingleResult();
+        em.close();
         return admin;
     }
     
@@ -71,6 +75,36 @@ public class TarifDao {
         Query query = em.createNamedQuery("Status.findByIdStatus");
         query.setParameter("idStatus", idStatus);
         status = (Status) query.getSingleResult();
+        em.close();
         return status;
+    }
+    
+    public void updateStatus(int idTarif){
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Tarif.findByIdTarif");
+        query.setParameter("idTarif", idTarif);
+        Tarif tarif = new Tarif();
+        tarif = (Tarif) query.getSingleResult();
+        if(tarif.getStatus().getStatus().equals("Aktif")){
+            tarif.setStatus(getDataStatusById(2));
+            tarif.setUpdatedTime(new Date());
+        } else {
+            tarif.setStatus(getDataStatusById(1));
+            tarif.setUpdatedTime(new Date());
+        }
+        em.getTransaction().begin();
+        em.merge(tarif);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
+    public Tarif getDataByIdTarif(int idTarif){
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Tarif.findByIdTarif");
+        query.setParameter("idTarif", idTarif);
+        Tarif tarif = new Tarif();
+        tarif = (Tarif) query.getSingleResult();
+        em.close();
+        return tarif;
     }
 }

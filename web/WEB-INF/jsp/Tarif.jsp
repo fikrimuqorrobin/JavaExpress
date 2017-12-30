@@ -74,7 +74,7 @@
                     </table>
             </form:form>
         </div>
-        <div>
+        <div align="center">
             <H1>Data Tarif</H1>
             <table border="1px">
                 <tr>
@@ -107,8 +107,8 @@
                         <td>${x.createdTime}</td>
                         <td>${x.updatedBy.getNamaLengkap()}</td>
                         <td>${x.updatedTime}</td>
-                        <td>${x.status.getStatus()}</td>
-                        <td>${x.idTarif}</td>
+                        <td><a href="${pageContext.request.contextPath}/home/updateStatus/${x.idTarif}">${x.status.getStatus()}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/home/Get/${x.idTarif}">Update</a></td>
                     </tr>
                 </c:forEach>
             </table>

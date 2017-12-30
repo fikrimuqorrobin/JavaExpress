@@ -12,21 +12,18 @@ import com.javaexpress.model.Kota;
 import com.javaexpress.model.Status;
 import com.javaexpress.model.Tarif;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+@Controller 
 @RequestMapping("/home")
 public class AdminController {
 
@@ -47,13 +44,6 @@ public class AdminController {
         model.addAttribute("TarifBean", trf);
         model.addAttribute("kota", kota);
         return "Tarif";
-    }
-    
-    @RequestMapping(value = "/datatarif")
-    public String showAllTarif(Model model){
-        List<Tarif> tf = dao.showAllTarif();
-        model.addAttribute("tarif", tf);
-        return "DataTarif";
     }
 
     @RequestMapping(value = "/save")
@@ -81,7 +71,28 @@ public class AdminController {
         tr.setUpdatedTime(new Date());
         tr.setStatus(status);
         dao.saveTarif(tr);
-        return "redirect:../home/datatarif";
+        return "redirect:../home/kota";
     }
 
+    @RequestMapping(value = "/updateStatus/{idTarif}")
+    public String updateStatus(@PathVariable Integer idTarif) {
+        dao.updateStatus(idTarif);
+        return "redirect:../kota";
+    }
+    
+    @RequestMapping(value = "/Get/{idTarif}")
+    public String showDataTarifById(@PathVariable Integer idTarif, Model model) {
+        TarifBean trf = new TarifBean();
+        Tarif tarif = (Tarif) dao.getDataByIdTarif(idTarif);
+        System.out.println("Reguler : "+tarif.getReguler());
+        model.addAttribute("TarifBean", trf);
+        model.addAttribute("atrb", tarif);
+        return "UpdateTarif";
+    }
+    
+    @RequestMapping(value = "/updateTarif/{idTarif}")
+    public String updateTarif(@PathVariable Integer idTarif) {
+        dao.updateStatus(idTarif);
+        return "redirect:../kota";
+    }
 }

@@ -20,6 +20,7 @@ public class TarifBean {
     private double ons;
     private double sds;
     private double hds;
+    private Date createdTime;
     private int status;
     private int createdBy;
     private int updatedBy;
@@ -27,7 +28,7 @@ public class TarifBean {
     public TarifBean() {
     }
 
-    public TarifBean(int kotaAsal, int kotaTujuan, double reguler, double kilat, double ons, double sds, double hds, int status, int createdBy, int updatedBy) {
+    public TarifBean(int kotaAsal, int kotaTujuan, double reguler, double kilat, double ons, double sds, double hds, Date createdTime, int status, int createdBy, int updatedBy) {
         this.kotaAsal = kotaAsal;
         this.kotaTujuan = kotaTujuan;
         this.reguler = reguler;
@@ -35,6 +36,7 @@ public class TarifBean {
         this.ons = ons;
         this.sds = sds;
         this.hds = hds;
+        this.createdTime = createdTime;
         this.status = status;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
@@ -178,6 +180,20 @@ public class TarifBean {
      */
     public void setUpdatedBy(int updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    /**
+     * @return the createdTime
+     */
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    /**
+     * @param createdTime the createdTime to set
+     */
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
     
