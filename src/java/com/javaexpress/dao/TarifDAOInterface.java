@@ -5,20 +5,23 @@
  */
 package com.javaexpress.dao;
 
-import com.javaexpress.model.Pengiriman;
+import com.javaexpress.model.Tarif;
 import java.util.List;
 
 /**
  *
  * @author user
  */
-public interface PengirimanDAOInterface {
+public interface TarifDAOInterface {
     
-    public void savePengiriman(Pengiriman pengiriman);
+    public void saveTarif(Tarif tarif);
     
-    public List<Pengiriman> findAllPengiriman();
+    public List<Tarif> findAllTarif();
     
-    public Pengiriman findById(int id);
+    public Tarif findByIdTarif(int id);
     
-    public Pengiriman findByNoPengiriman(String nopengiriman);
+    public void updateTarif(int id);
+    
+    
+    
 }
