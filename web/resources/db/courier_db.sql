@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2017 at 02:26 PM
+-- Generation Time: Dec 30, 2017 at 09:13 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -441,7 +441,9 @@ ADD CONSTRAINT `status_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`i
 ALTER TABLE `tarif`
 ADD CONSTRAINT `tarif_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`) ON DELETE NO ACTION ON UPDATE CASCADE,
 ADD CONSTRAINT `tarif_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
-ADD CONSTRAINT `tarif_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ADD CONSTRAINT `tarif_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `tarif_ibfk_4` FOREIGN KEY (`kota_asal`) REFERENCES `kota` (`kode_kota`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `tarif_ibfk_5` FOREIGN KEY (`kota_tujuan`) REFERENCES `kota` (`kode_kota`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tracking`
