@@ -50,6 +50,7 @@ public class PengirimanDAO {
         em = emf.createEntityManager();
         List<Kota> kota;
         kota = this.em.createNamedQuery("Kota.findAll").getResultList();
+        em.close();
         return kota;
     }
 
@@ -60,6 +61,7 @@ public class PengirimanDAO {
         query.setParameter("idAdmin", id);
         Admin admin = new Admin();
         admin = (Admin) query.getSingleResult();
+        em.close();
         return admin;
 
     }
@@ -71,6 +73,7 @@ public class PengirimanDAO {
         query.setParameter("kodeKota", id);
         Kota kota = new Kota();
         kota = (Kota) query.getSingleResult();
+        em.close();
         return kota;
 
     }
@@ -82,6 +85,7 @@ public class PengirimanDAO {
         query.setParameter("idStatus", id);
         Status status = new Status();
         status = (Status) query.getSingleResult();
+        em.close();
         return status;
 
     }
@@ -92,6 +96,7 @@ public class PengirimanDAO {
         query.setParameter("idTarif", id);
         Tarif tarif = new Tarif();
         tarif = (Tarif) query.getSingleResult();
+        em.close();
         return tarif;
 
     }

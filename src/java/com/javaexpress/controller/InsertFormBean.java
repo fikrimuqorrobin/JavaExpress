@@ -24,10 +24,10 @@ public class InsertFormBean {
     private String namaPaket;
     private int beratBarang;
     private Character asuransi;
-    private Double hargaBarang;
+    private double hargaBarang;
     private String jenisLayanan;
     private int tarif;
-    private Double totalTarif;
+    private double totalTarif;
     private String noResi;
     private int createdBy;
     private int updatedBy;
@@ -38,7 +38,7 @@ public class InsertFormBean {
     public InsertFormBean() {
     }
 
-    public InsertFormBean(String namaPengirim, String teleponPengirim, int kotaPengirim, String alamatPengirim, String namaPenerima, String teleponPenerima, int kotaPenerima, String alamatPenerima, String tipePaket, String namaPaket, int beratBarang, Character asuransi, Double hargaBarang, String jenisLayanan, int tarif, Double totalTarif, String noResi, int createdBy, int updatedBy, int status) {
+    public InsertFormBean(String namaPengirim, String teleponPengirim, int kotaPengirim, String alamatPengirim, String namaPenerima, String teleponPenerima, int kotaPenerima, String alamatPenerima, String tipePaket, String namaPaket, int beratBarang, Character asuransi, double hargaBarang, String jenisLayanan, int tarif, double totalTarif, String noResi, int createdBy, int updatedBy, int status) {
         this.namaPengirim = namaPengirim;
         this.teleponPengirim = teleponPengirim;
         this.kotaPengirim = kotaPengirim;
@@ -232,14 +232,14 @@ public class InsertFormBean {
     /**
      * @return the hargaBarang
      */
-    public Double getHargaBarang() {
+    public double getHargaBarang() {
         return hargaBarang;
     }
 
     /**
      * @param hargaBarang the hargaBarang to set
      */
-    public void setHargaBarang(Double hargaBarang) {
+    public void setHargaBarang(double hargaBarang) {
         this.hargaBarang = hargaBarang;
     }
 
@@ -274,14 +274,14 @@ public class InsertFormBean {
     /**
      * @return the totalTarif
      */
-    public Double getTotalTarif() {
+    public double getTotalTarif() {
         return totalTarif;
     }
 
     /**
      * @param totalTarif the totalTarif to set
      */
-    public void setTotalTarif(Double totalTarif) {
+    public void setTotalTarif(double totalTarif) {
         this.totalTarif = totalTarif;
     }
 
@@ -341,6 +341,11 @@ public class InsertFormBean {
         this.status = status;
     }
 
+   double totalHarga =0;
+   public double hitungTotalHarga(int berat,double tarif){
+   totalHarga =  berat * tarif;
+   return totalHarga;
+   }
     
 
     }

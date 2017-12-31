@@ -33,6 +33,10 @@ public class AdminController {
     public String halamanIndex(Model model) {
         InsertFormBean formInsertData = new InsertFormBean();
         List<Kota> kotas = PDAO.findAllKota();
+//        formInsertData.setStatus(1);
+//        Status status = new Status();
+//        status = PDAO.findStatusById(1);
+//        model.addAttribute("status",status);
         model.addAttribute("kota", kotas);
         model.addAttribute("insertData", formInsertData);
         return "insertdata";
@@ -55,15 +59,14 @@ public class AdminController {
         Kota kotaPenerima = new Kota();
         kotaPenerima =PDAO.findKotaById(insertFormBean.getKotaPenerima());
         Status status = new Status();
-        status = PDAO.findStatusById(insertFormBean.getStatus());
+        status = PDAO.findStatusById(1);
         Tarif tarif = new Tarif();
         tarif = PDAO.findTarifById(insertFormBean.getTarif());
         //pengiriman.setNamaPengirim(insertFormBean.getNamaPengirim());
         //System.out.println("Nama Pengirim : " + pengiriman.getNamaPengirim());
-
         pengiriman.setNamaPengirim(insertFormBean.getNamaPengirim());
         pengiriman.setTeleponPengirim(insertFormBean.getTeleponPengirim());
-        pengiriman.setKotaPenerima(kotaPengirim);
+        pengiriman.setKotaPengirim(kotaPengirim);
         pengiriman.setAlamatPengirim(insertFormBean.getAlamatPengirim());
         pengiriman.setNamaPenerima(insertFormBean.getNamaPenerima());
         pengiriman.setTeleponPenerima(insertFormBean.getTeleponPenerima());
@@ -76,7 +79,7 @@ public class AdminController {
         pengiriman.setHargaBarang(BigDecimal.valueOf(insertFormBean.getHargaBarang()));
         pengiriman.setJenisLayanan(insertFormBean.getJenisLayanan());
         pengiriman.setTarif(tarif);
-        pengiriman.setTotalTarif(BigDecimal.valueOf(insertFormBean.getTotalTarif()));
+        pengiriman.setTotalTarif(BigDecimal.valueOf(insertFormBean.getBeratBarang()));
         pengiriman.setNoResi(insertFormBean.getNoResi());
         pengiriman.setCreatedBy(admin);
         pengiriman.setUpdatedBy(admin);
