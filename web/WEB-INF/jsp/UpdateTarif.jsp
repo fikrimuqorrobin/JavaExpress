@@ -16,7 +16,7 @@
     <body>
         <div align="center">
             <h1>Update Data Kota</h1>
-            <form:form action="${pageContext.request.contextPath}/home/save" modelAttribute="TarifBean" method="POST">
+            <form:form action="${pageContext.request.contextPath}/home/updateTarif/${atrb.idTarif}" modelAttribute="TarifBean" method="POST">
                 <table>
                     <tr> 
                         <td><form:label path="kotaAsal">Kota Asal</form:label></td>
@@ -48,19 +48,20 @@
                     </tr>
                     <tr>
                         <td><form:label path="createdBy">Create By</form:label></td>
-                        <td><form:input path="createdBy" value="${atrb.createdBy.getNamaLengkap()}" readonly="true"/></td>
+                        <td><input type="text" value="${atrb.createdBy.getNamaLengkap()}"/>
+                        <form:input path="createdBy" value="${atrb.createdBy.getIdAdmin()}" hidden="true"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="createdTime">Create Time</form:label></td>
                         <td><form:input path="createdTime" value="${atrb.createdTime}" readonly="true"/></td>
                     </tr>
-                    <tr>
+                    <tr hidden="true">
                         <td><form:label path="updatedBy">Update By</form:label></td>
-                        <td><form:input path="updatedBy" value="${atrb.updatedBy.getNamaLengkap()}" readonly="true"/></td>
+                        <td><form:input path="updatedBy" value="${atrb.updatedBy.getIdAdmin()}" readonly="true"/></td>
                     </tr>
-                    <tr>
+                    <tr hidden="true">
                         <td><form:label path="status">Status</form:label></td>
-                        <td><form:input path="status" value="${atrb.status.getStatus()}"/></td>
+                        <td><form:input path="status" value="${atrb.status.getIdStatus()}"/></td>
                     </tr>
                     <tr>
                         <td colspan="2" align="right">

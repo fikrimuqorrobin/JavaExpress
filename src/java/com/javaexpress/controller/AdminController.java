@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller 
+@Controller
 @RequestMapping("/home")
 public class AdminController {
 
@@ -47,30 +47,8 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/save")
-    public String tarifSave(@ModelAttribute("TarifBean") TarifBean tf) throws ParseException {
-        Tarif tr = new Tarif();
-        Admin admin = new Admin();
-        admin = dao.getDataById(tf.getCreatedBy());
-        Status status = new Status();
-        status = dao.getDataStatusById(tf.getStatus());
-//        DateFormat format = new SimpleDateFormat("yyyy-M-dd");
-
-        tr.setKotaAsal(tf.getKotaAsal());
-        tr.setKotaTujuan(tf.getKotaTujuan());
-        tr.setReguler(BigDecimal.valueOf(tf.getReguler()));
-        tr.setKilat(BigDecimal.valueOf(tf.getKilat()));
-        tr.setOns(BigDecimal.valueOf(tf.getOns()));
-        tr.setSds(BigDecimal.valueOf(tf.getSds()));
-        tr.setHds(BigDecimal.valueOf(tf.getHds()));
-        tr.setCreatedBy(admin);
-        tr.setUpdatedBy(admin);
-//        System.out.println("Datetime : "+format.parse(tf.getCreatedTime()));
-//        tr.setCreatedTime(format.parse(tf.getCreatedTime()));
-//        tr.setUpdatedTime(format.parse(tf.getUpdatedTime()));
-        tr.setCreatedTime(new Date());
-        tr.setUpdatedTime(new Date());
-        tr.setStatus(status);
-        dao.saveTarif(tr);
+    public String tarifSave(@ModelAttribute("TarifBean") TarifBean tf){
+        dao.saveTarif(tf);
         return "redirect:../home/kota";
     }
 
@@ -79,20 +57,19 @@ public class AdminController {
         dao.updateStatus(idTarif);
         return "redirect:../kota";
     }
-    
+
     @RequestMapping(value = "/Get/{idTarif}")
     public String showDataTarifById(@PathVariable Integer idTarif, Model model) {
         TarifBean trf = new TarifBean();
         Tarif tarif = (Tarif) dao.getDataByIdTarif(idTarif);
-        System.out.println("Reguler : "+tarif.getReguler());
         model.addAttribute("TarifBean", trf);
         model.addAttribute("atrb", tarif);
         return "UpdateTarif";
     }
-    
+
     @RequestMapping(value = "/updateTarif/{idTarif}")
-    public String updateTarif(@PathVariable Integer idTarif) {
-        dao.updateStatus(idTarif);
+    public String updateTarif(@ModelAttribute("TarifBean") TarifBean tf, @PathVariable Integer idTarif) throws ParseException {
+        dao.updateTarif(tf, idTarif);
         return "redirect:../kota";
     }
 }
