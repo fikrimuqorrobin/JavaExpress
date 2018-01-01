@@ -42,10 +42,9 @@ public class TarifDao {
     @Transactional
     public void saveTarif(TarifBean tf) {
         Tarif tarif = new Tarif();
-        Admin admin = new Admin();
-        admin = getDataById(tf.getCreatedBy());
-        Status status = new Status();
-        status = getDataStatusById(tf.getStatus());
+        Admin admin = getDataById(tf.getCreatedBy()); // ini untuk get Adminnya bor
+        Status status = getDataStatusById(1); // by id disi 1, itu adalah Aktif
+//        status = getDataStatusById(tf.getStatus());
 //        DateFormat format = new SimpleDateFormat("yyyy-M-dd");
 
         tarif.setKotaAsal(tf.getKotaAsal());
@@ -106,14 +105,13 @@ public class TarifDao {
         em = emf.createEntityManager();
         Query query = em.createNamedQuery("Tarif.findByIdTarif");
         query.setParameter("idTarif", idTarif);
-        Tarif tarif = new Tarif();
-        tarif = (Tarif) query.getSingleResult();
+        Tarif tarif = (Tarif) query.getSingleResult();
         if (tarif.getStatus().getStatus().equals("Aktif")) {
             tarif.setStatus(getDataStatusById(2));
-            tarif.setUpdatedTime(new Date());
+            tarif.setUpdatedTime(new Date()); // update berdasrakan tanggal dan jam
         } else {
             tarif.setStatus(getDataStatusById(1));
-            tarif.setUpdatedTime(new Date());
+            tarif.setUpdatedTime(new Date()); // update berdasrakan tanggal dan jam
         }
         em.getTransaction().begin();
         em.merge(tarif);
@@ -129,13 +127,29 @@ public class TarifDao {
         tarif = (Tarif) query.getSingleResult();
         return tarif;
     }
+    
+    // UNTUK CEK KOTA SUDAH TERDAHTAR APA BELUM
+    public Tarif getDataKotaAsal(int kotaAsal){
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Tarif.findByKotaAsal");
+        query.setParameter("kotaAsal", kotaAsal);
+        Tarif tarif = (Tarif) query.getSingleResult();
+        return tarif;
+    }
+    public Tarif getDataKotaTujuan(int kotaTujuan){
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Tarif.findByKotaTujuan");
+        query.setParameter("kotaTujuan", kotaTujuan);
+        Tarif tarif = (Tarif) query.getSingleResult();
+        return tarif;
+    }
+    // UNTUK CEK KOTA SUDAH TERDAHTAR APA BELUM
 
     public void updateTarif(TarifBean tf, int idTarif) throws ParseException {
         em = emf.createEntityManager();
         Query query = em.createNamedQuery("Tarif.findByIdTarif");
         query.setParameter("idTarif", idTarif);
-        Tarif tarif = new Tarif();
-        tarif = (Tarif) query.getSingleResult();
+        Tarif tarif = (Tarif) query.getSingleResult();
         tarif.setReguler(BigDecimal.valueOf(tf.getReguler()));
         tarif.setKilat(BigDecimal.valueOf(tf.getKilat()));
         tarif.setOns(BigDecimal.valueOf(tf.getOns()));

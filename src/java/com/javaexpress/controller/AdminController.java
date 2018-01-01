@@ -7,18 +7,15 @@ package com.javaexpress.controller;
 
 import com.javaexpress.bean.TarifBean;
 import com.javaexpress.dao.TarifDao;
-import com.javaexpress.model.Admin;
 import com.javaexpress.model.Kota;
-import com.javaexpress.model.Status;
 import com.javaexpress.model.Tarif;
-import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,18 +34,29 @@ public class AdminController {
 
     @RequestMapping(value = "/kota")
     public String showAll(Model model) {
-        TarifBean trf = new TarifBean();
+        TarifBean tarifBean = new TarifBean();
         List<Kota> kota = dao.showAllKota();
-        List<Tarif> tf = dao.showAllTarif();
-        model.addAttribute("tarif", tf);
-        model.addAttribute("TarifBean", trf);
+        List<Tarif> tarif = dao.showAllTarif();
+        model.addAttribute("tarif", tarif);
+        model.addAttribute("TarifBean", tarifBean);
         model.addAttribute("kota", kota);
         return "Tarif";
     }
 
     @RequestMapping(value = "/save")
-    public String tarifSave(@ModelAttribute("TarifBean") TarifBean tf){
-        dao.saveTarif(tf);
+    public String tarifSave(@Valid @ModelAttribute("TarifBean") TarifBean tarifBean, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            System.out.println("Masuk Errors");
+            List<Tarif> tarif = dao.showAllTarif();
+            List<Kota> kota = dao.showAllKota();
+            model.addAttribute("TarifBean", tarifBean);
+            model.addAttribute("tarif", tarif);
+            model.addAttribute("kota", kota);
+            return "Tarif"; // kembalikan ke JSP jangan REDIRECT!, hati2 bro... 2 hari saya gak tidur grgr ini!
+        } else {
+            System.out.println("Masuk Ke Save...");
+            dao.saveTarif(tarifBean);
+        }
         return "redirect:../home/kota";
     }
 
@@ -60,16 +68,16 @@ public class AdminController {
 
     @RequestMapping(value = "/Get/{idTarif}")
     public String showDataTarifById(@PathVariable Integer idTarif, Model model) {
-        TarifBean trf = new TarifBean();
+        TarifBean tarifBean = new TarifBean();
         Tarif tarif = (Tarif) dao.getDataByIdTarif(idTarif);
-        model.addAttribute("TarifBean", trf);
+        model.addAttribute("TarifBean", tarifBean);
         model.addAttribute("atrb", tarif);
         return "UpdateTarif";
     }
 
     @RequestMapping(value = "/updateTarif/{idTarif}")
-    public String updateTarif(@ModelAttribute("TarifBean") TarifBean tf, @PathVariable Integer idTarif) throws ParseException {
-        dao.updateTarif(tf, idTarif);
+    public String updateTarif(@ModelAttribute("TarifBean") TarifBean tarifBean, @PathVariable Integer idTarif) throws ParseException {
+        dao.updateTarif(tarifBean, idTarif);
         return "redirect:../kota";
     }
 }

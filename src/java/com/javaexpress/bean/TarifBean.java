@@ -5,7 +5,7 @@
  */
 package com.javaexpress.bean;
 
-import java.util.Date;
+import javax.validation.constraints.DecimalMin;
 
 /**
  *
@@ -15,15 +15,25 @@ public class TarifBean {
 
     private int kotaAsal;
     private int kotaTujuan;
+    @DecimalMin(value = "1.0", message = "Mohon Isi Harga Reguler Minimal {value}")
     private double reguler;
+    
+    @DecimalMin(value = "1.0", message = "Mohon Isi Harga Kilat Minimal {value}")
     private double kilat;
+    
+    @DecimalMin(value = "1.0", message = "Mohon Isi Harga ONS Minimal {value}")
     private double ons;
+    
+    @DecimalMin(value = "1.0", message = "Mohon Isi Harga SDS Minimal {value}")
     private double sds;
+    
+    @DecimalMin(value = "1.0", message = "Mohon Isi Harga HDS Minimal {value}")
     private double hds;
+    
     private String createdTime;
     private int status;
-    private int createdBy;
-    private int updatedBy;
+    private int createdBy = 1;
+    private int updatedBy = 1;
 
     public TarifBean() {
     }

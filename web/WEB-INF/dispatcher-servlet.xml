@@ -21,7 +21,8 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/style/"
                    cache-period="31556926"/>
-
-    <mvc:annotation-driven />
+    
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" p:basename="/WEB-INF/resource/messages"/>
+    <mvc:annotation-driven/>
 
 </beans>

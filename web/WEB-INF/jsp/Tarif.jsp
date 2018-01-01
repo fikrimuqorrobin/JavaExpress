@@ -12,11 +12,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Kota</title>
+        <style>
+            .error {
+                color: red; font-weight: bold; font-style: normal;
+            }
+        </style>
     </head>
     <body>
         <div align="center">
             <h1>Data Kota</h1>
-            <form:form action="${pageContext.request.contextPath}/home/save" modelAttribute="TarifBean" method="POST">
+            <form:form action="${pageContext.request.contextPath}/home/save" commandName="tarifBean" modelAttribute="TarifBean" method="POST">
                 <table>
                     <tr> 
                         <td><form:label path="kotaAsal">Kota Asal</form:label></td>
@@ -25,6 +30,8 @@
                                     <form:option path="kotaAsal" value="${k.kodeKota}">${k.namaKota}</form:option>
                                 </c:forEach>
                             </form:select></td>
+                        <td rowspan="2"><form:errors path="kotaAsal" cssClass="error"/><br/>
+                            <form:errors path="kotaTujuan" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="kotaTujuan">Kota Tujuan</form:label></td>
@@ -36,35 +43,33 @@
                     </tr>
                     <tr>
                         <td><form:label path="reguler">Harga Reguler</form:label></td>
-                        <td><form:input path="reguler"/></td>
+                        <td><form:input path="reguler"/></td><td><form:errors path="reguler" cssClass="error"/></td>
                     </tr>
                     <tr>
-                        <td><form:label path="kilat">Harga Reguler</form:label></td>
-                        <td><form:input path="kilat"/></td>
+                        <td><form:label path="kilat">Harga Kilat</form:label></td>
+                        <td><form:input path="kilat"/></td><td><form:errors path="kilat" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="ons">Harga ONS</form:label></td>
-                        <td><form:input path="ons"/></td>
+                        <td><form:input path="ons"/></td><td><form:errors path="ons" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="sds">Harga SDS</form:label></td>
-                        <td><form:input path="sds"/></td>
+                        <td><form:input path="sds"/></td><td><form:errors path="sds" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="hds">Harga HDS</form:label></td>
-                        <td><form:input path="hds"/></td>
+                        <td><form:input path="hds"/></td><td><form:errors path="hds" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="createdBy">Create By</form:label></td>
                         <td><form:input path="createdBy"/></td>
+                        <td><form:errors path="createdBy" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td><form:label path="updatedBy">Update By</form:label></td>
                         <td><form:input path="updatedBy"/></td>
-                    </tr>
-                    <tr>
-                        <td><form:label path="status">Status</form:label></td>
-                        <td><form:input path="status"/></td>
+                        <td><form:errors path="updatedBy" cssClass="error"/></td>
                     </tr>
                     <tr>
                         <td colspan="2" align="right">
