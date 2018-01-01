@@ -6,6 +6,7 @@
     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
     <li><a href="${pageContext.request.contextPath}/home/staff">Data Staff</a></li>
     <li><a href="${pageContext.request.contextPath}/home/input/staff">Input Admin Staff</a></li>
+    <li><a href="${pageContext.request.contextPath}/home/profil">My Profile</a></li>
     <li><a href="${pageContext.request.contextPath}/home/logout" onclick="return confirm('Yakin Logout ?')">Logout</a></li>
 </ul>
 
@@ -16,6 +17,7 @@
     <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
     <li><a href="${pageContext.request.contextPath}/input/pengiriman">Input Pengiriman</a></li>
     <li><a href="${pageContext.request.contextPath}/update/pengiriman">Update Status Pengiriman</a></li>
+    <li><a href="${pageContext.request.contextPath}/home/profil">My Profile</a></li>
     <li><a href="${pageContext.request.contextPath}/home/logout" onclick="return confirm('Yakin Logout ?')">Logout</a></li>
 </ul>
 

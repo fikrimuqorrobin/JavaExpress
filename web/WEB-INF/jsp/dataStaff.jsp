@@ -14,8 +14,29 @@
     <body>
         <h1>Data Staff</h1>
         <jsp:include page="menu.jsp"></jsp:include>
-        <c:forEach var="s" items="${staff}">
-            <p>${s.getNamaLengkap()}</p>
-        </c:forEach>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Staff</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach varStatus="no" var="s" items="${staff}">
+                    <tr>
+                        <td>${no.count}</td>
+                        <td>${s.getNamaLengkap()}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/home/edit/staff/${s.getIdAdmin()}">Edit</a>
+                            <a href="${pageContext.request.contextPath}/home/hapus/staff/${s.getIdAdmin()}">Hapus</a>
+                        </td>
+                    </tr>
+                    
+                 </c:forEach>
+               
+            </tbody>
+        </table>
+        
     </body>
 </html>
