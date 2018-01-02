@@ -21,7 +21,7 @@ public class MainController {
     
     
     @Autowired
-    TarifDAO tarifDAO;
+    TarifDao tarifDAO;
     
     @Autowired
     TrackingDAO trackingDAO;

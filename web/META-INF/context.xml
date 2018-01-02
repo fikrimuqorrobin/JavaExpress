@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<Context path="/WebBiasa">
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="JavaExpress" password="" type="javax.sql.DataSource" url="jdbc:mysql://192.168.3.225:3306/courier_db?zeroDateTimeBehavior=convertToNull" username="root"/>
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="localhost" password="" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/courier_db?zeroDateTimeBehavior=convertToNull" username="root"/>
+</Context>
 <Context path="/JavaExpress"/>

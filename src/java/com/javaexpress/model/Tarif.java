@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -54,25 +55,32 @@ public class Tarif implements Serializable {
     private Integer idTarif;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Column(name = "reguler")
     private BigDecimal reguler;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "kilat")
     private BigDecimal kilat;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ons")
     private BigDecimal ons;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "sds")
     private BigDecimal sds;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "hds")
     private BigDecimal hds;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;

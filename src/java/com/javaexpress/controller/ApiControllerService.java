@@ -5,7 +5,7 @@
  */
 package com.javaexpress.controller;
 
-import com.javaexpress.dao.TarifDAO;
+import com.javaexpress.dao.TarifDao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApiControllerService {
     
     @Autowired
-    TarifDAO tarifDAO;
+    TarifDao tarifDAO;
     
    
     
