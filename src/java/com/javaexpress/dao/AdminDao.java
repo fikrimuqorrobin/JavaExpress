@@ -65,11 +65,11 @@ public class AdminDao {
         return admin;
     }
     
-    public List<LevelAdmin> tampilLevelAdmin(){
+    public List<Admin> tampilLevelAdmin(){
         em = emf.createEntityManager();
-        List<LevelAdmin> levelAdmin;
-        levelAdmin = em.createNamedQuery("LevelAdmin.findAll").getResultList();
-        return levelAdmin;
+        List<Admin> admins;
+        admins = em.createNamedQuery("Admin.findAll").getResultList();
+        return admins;
     }
     
     public LevelAdmin findLevelById(Integer id){

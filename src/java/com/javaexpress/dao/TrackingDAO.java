@@ -76,4 +76,8 @@ public class TrackingDAO {
             em = emf.createEntityManager();
            return em.find(Status.class, id_status);
      }
+
+    public List<Tracking> findbyNoResi() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

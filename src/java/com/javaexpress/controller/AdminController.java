@@ -2,9 +2,12 @@ package com.javaexpress.controller;
 
 import com.javaexpress.bean.LoginBean;
 import com.javaexpress.bean.RegisterStaffBean;
+import com.javaexpress.bean.TrackingBean;
 import com.javaexpress.dao.AdminDao;
+import com.javaexpress.dao.TrackingDAO;
 import com.javaexpress.model.Admin;
 import com.javaexpress.model.LevelAdmin;
+import com.javaexpress.model.Tracking;
 import com.javaexpress.utils.PasswordDigest;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +24,12 @@ public class AdminController {
     
     @Autowired
     AdminDao ad;
+    TrackingDAO tdao;
 
     @RequestMapping()
     public String halamanIndex(Model model) {
         LoginBean loginBean = new LoginBean();
-        List<LevelAdmin> levels = ad.tampilLevelAdmin();
+        List<Admin> levels = ad.tampilLevelAdmin();
         model.addAttribute("loginBean", loginBean);
         model.addAttribute("level", levels);
         return "index";
@@ -36,7 +40,7 @@ public class AdminController {
         Admin admin = ad.findByUsername(loginBean.getUsername());
         LevelAdmin levelAdmin = ad.findLevelById(loginBean.getLevel());
         
-        List<LevelAdmin> levels = ad.tampilLevelAdmin();
+        List<Admin> levels = ad.tampilLevelAdmin();
         model.addAttribute("level", levels);
         
         if(admin.getUsername()==null) {
@@ -82,10 +86,19 @@ public class AdminController {
     @RequestMapping("/input/staff") 
     public String registerForm(Model model) {
         RegisterStaffBean registerBean = new RegisterStaffBean();
-        List<LevelAdmin> levels = ad.tampilLevelAdmin();
+        List<Admin> levels = ad.tampilLevelAdmin();
         model.addAttribute("level", levels);
         model.addAttribute("registerBean", registerBean);
         return "registerStaff";
+    }
+    
+    @RequestMapping("/tracking")
+    public String trackingForm(Model model){
+        TrackingBean trackingBean = new TrackingBean();
+        List<Tracking> tracking = tdao.findbyNoResi();
+        model.addAttribute("tracking", tracking);
+        model.addAttribute("trackingBean",trackingBean);
+        return "home";
     }
     
     @RequestMapping("/input/staff/save") 
