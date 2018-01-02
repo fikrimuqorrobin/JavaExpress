@@ -38,38 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a")
     , @NamedQuery(name = "Admin.findByIdAdmin", query = "SELECT a FROM Admin a WHERE a.idAdmin = :idAdmin")
     , @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a WHERE a.username = :username")
-    , @NamedQuery(name = "Admin.findByNamaLengkap", query = "SELECT a FROM Admin a WHERE a.namaLengkap = :namaLengkap")})
+    , @NamedQuery(name = "Admin.findByNamaLengkap", query = "SELECT a FROM Admin a WHERE a.namaLengkap = :namaLengkap")
+    , @NamedQuery(name = "Admin.findByCreatedTime", query = "SELECT a FROM Admin a WHERE a.createdTime = :createdTime")
+    , @NamedQuery(name = "Admin.findByUpdatedTime", query = "SELECT a FROM Admin a WHERE a.updatedTime = :updatedTime")})
 public class Admin implements Serializable {
-
-    @Basic(optional = false)
-    @Column(name = "created_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdTime;
-    @Basic(optional = false)
-    @Column(name = "updated_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedTime;
-    @JoinColumn(name = "status", referencedColumnName = "id_status")
-    @ManyToOne(optional = false)
-    private Status status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<Admin> adminList;
-    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
-    @ManyToOne(optional = false)
-    private Admin createdBy;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<Admin> adminList1;
-    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
-    @ManyToOne(optional = false)
-    private Admin updatedBy;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<LevelAdmin> levelAdminList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<LevelAdmin> levelAdminList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<Status> statusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<Status> statusList1;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -87,6 +59,14 @@ public class Admin implements Serializable {
     @Basic(optional = false)
     @Column(name = "nama_lengkap")
     private String namaLengkap;
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Provinsi> provinsiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
@@ -106,10 +86,31 @@ public class Admin implements Serializable {
     @JoinColumn(name = "level", referencedColumnName = "id_level")
     @ManyToOne(optional = false)
     private LevelAdmin level;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Admin> adminList;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Admin> adminList1;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Tracking> trackingList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
     private List<Tracking> trackingList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<LevelAdmin> levelAdminList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<LevelAdmin> levelAdminList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Status> statusList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Status> statusList1;
 
     public Admin() {
     }
@@ -118,11 +119,13 @@ public class Admin implements Serializable {
         this.idAdmin = idAdmin;
     }
 
-    public Admin(Integer idAdmin, String username, String password, String namaLengkap) {
+    public Admin(Integer idAdmin, String username, String password, String namaLengkap, Date createdTime, Date updatedTime) {
         this.idAdmin = idAdmin;
         this.username = username;
         this.password = password;
         this.namaLengkap = namaLengkap;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public Integer getIdAdmin() {
@@ -155,6 +158,22 @@ public class Admin implements Serializable {
 
     public void setNamaLengkap(String namaLengkap) {
         this.namaLengkap = namaLengkap;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @XmlTransient
@@ -237,65 +256,6 @@ public class Admin implements Serializable {
         this.level = level;
     }
 
-    @XmlTransient
-    public List<Tracking> getTrackingList() {
-        return trackingList;
-    }
-
-    public void setTrackingList(List<Tracking> trackingList) {
-        this.trackingList = trackingList;
-    }
-
-    @XmlTransient
-    public List<Tracking> getTrackingList1() {
-        return trackingList1;
-    }
-
-    public void setTrackingList1(List<Tracking> trackingList1) {
-        this.trackingList1 = trackingList1;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAdmin != null ? idAdmin.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Admin)) {
-            return false;
-        }
-        Admin other = (Admin) object;
-        if ((this.idAdmin == null && other.idAdmin != null) || (this.idAdmin != null && !this.idAdmin.equals(other.idAdmin))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.javaexpress.model.Admin[ idAdmin=" + idAdmin + " ]";
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -339,6 +299,24 @@ public class Admin implements Serializable {
     }
 
     @XmlTransient
+    public List<Tracking> getTrackingList() {
+        return trackingList;
+    }
+
+    public void setTrackingList(List<Tracking> trackingList) {
+        this.trackingList = trackingList;
+    }
+
+    @XmlTransient
+    public List<Tracking> getTrackingList1() {
+        return trackingList1;
+    }
+
+    public void setTrackingList1(List<Tracking> trackingList1) {
+        this.trackingList1 = trackingList1;
+    }
+
+    @XmlTransient
     public List<LevelAdmin> getLevelAdminList() {
         return levelAdminList;
     }
@@ -372,6 +350,31 @@ public class Admin implements Serializable {
 
     public void setStatusList1(List<Status> statusList1) {
         this.statusList1 = statusList1;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idAdmin != null ? idAdmin.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Admin)) {
+            return false;
+        }
+        Admin other = (Admin) object;
+        if ((this.idAdmin == null && other.idAdmin != null) || (this.idAdmin != null && !this.idAdmin.equals(other.idAdmin))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.javaexpress.model.Admin[ idAdmin=" + idAdmin + " ]";
     }
     
 }
