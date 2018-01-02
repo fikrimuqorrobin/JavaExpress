@@ -17,6 +17,12 @@
                 color: red; font-weight: bold; font-style: normal;
             }
         </style>
+        <script>
+            var cek = ${validasi};
+            if(cek !== null){
+                alert(cek);
+            }
+        </script>
     </head>
     <body>
         <div align="center">
@@ -101,8 +107,8 @@
                 <c:forEach var="x" items="${tarif}">
                     <tr>
                         <td>${x.idTarif}</td>
-                        <td>${x.kotaAsal}</td>
-                        <td>${x.kotaTujuan}</td>
+                        <td>${x.kotaAsal.getNamaKota()}</td>
+                        <td>${x.kotaTujuan.getNamaKota()}</td>
                         <td>${x.reguler}</td>
                         <td>${x.kilat}</td>
                         <td>${x.ons}</td>

@@ -20,6 +20,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,13 +46,17 @@ public class Tracking implements Serializable {
     @Column(name = "id_tracking")
     private Integer idTracking;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "status_pengiriman")
     private String statusPengiriman;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "update_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;

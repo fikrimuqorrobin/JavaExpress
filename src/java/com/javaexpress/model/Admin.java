@@ -6,6 +6,7 @@
 package com.javaexpress.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +22,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,7 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a")
     , @NamedQuery(name = "Admin.findByIdAdmin", query = "SELECT a FROM Admin a WHERE a.idAdmin = :idAdmin")
     , @NamedQuery(name = "Admin.findByUsername", query = "SELECT a FROM Admin a WHERE a.username = :username")
-    , @NamedQuery(name = "Admin.findByNamaLengkap", query = "SELECT a FROM Admin a WHERE a.namaLengkap = :namaLengkap")})
+    , @NamedQuery(name = "Admin.findByNamaLengkap", query = "SELECT a FROM Admin a WHERE a.namaLengkap = :namaLengkap")
+    , @NamedQuery(name = "Admin.findByCreatedTime", query = "SELECT a FROM Admin a WHERE a.createdTime = :createdTime")
+    , @NamedQuery(name = "Admin.findByUpdatedTime", query = "SELECT a FROM Admin a WHERE a.updatedTime = :updatedTime")})
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,15 +52,31 @@ public class Admin implements Serializable {
     @Column(name = "id_admin")
     private Integer idAdmin;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "nama_lengkap")
     private String namaLengkap;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Provinsi> provinsiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
@@ -73,10 +96,31 @@ public class Admin implements Serializable {
     @JoinColumn(name = "level", referencedColumnName = "id_level")
     @ManyToOne(optional = false)
     private LevelAdmin level;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Admin> adminList;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Admin> adminList1;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Tracking> trackingList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
     private List<Tracking> trackingList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<LevelAdmin> levelAdminList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<LevelAdmin> levelAdminList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Status> statusList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Status> statusList1;
 
     public Admin() {
     }
@@ -85,11 +129,13 @@ public class Admin implements Serializable {
         this.idAdmin = idAdmin;
     }
 
-    public Admin(Integer idAdmin, String username, String password, String namaLengkap) {
+    public Admin(Integer idAdmin, String username, String password, String namaLengkap, Date createdTime, Date updatedTime) {
         this.idAdmin = idAdmin;
         this.username = username;
         this.password = password;
         this.namaLengkap = namaLengkap;
+        this.createdTime = createdTime;
+        this.updatedTime = updatedTime;
     }
 
     public Integer getIdAdmin() {
@@ -122,6 +168,22 @@ public class Admin implements Serializable {
 
     public void setNamaLengkap(String namaLengkap) {
         this.namaLengkap = namaLengkap;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @XmlTransient
@@ -204,6 +266,48 @@ public class Admin implements Serializable {
         this.level = level;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @XmlTransient
+    public List<Admin> getAdminList() {
+        return adminList;
+    }
+
+    public void setAdminList(List<Admin> adminList) {
+        this.adminList = adminList;
+    }
+
+    public Admin getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Admin createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @XmlTransient
+    public List<Admin> getAdminList1() {
+        return adminList1;
+    }
+
+    public void setAdminList1(List<Admin> adminList1) {
+        this.adminList1 = adminList1;
+    }
+
+    public Admin getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Admin updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
     @XmlTransient
     public List<Tracking> getTrackingList() {
         return trackingList;
@@ -220,6 +324,42 @@ public class Admin implements Serializable {
 
     public void setTrackingList1(List<Tracking> trackingList1) {
         this.trackingList1 = trackingList1;
+    }
+
+    @XmlTransient
+    public List<LevelAdmin> getLevelAdminList() {
+        return levelAdminList;
+    }
+
+    public void setLevelAdminList(List<LevelAdmin> levelAdminList) {
+        this.levelAdminList = levelAdminList;
+    }
+
+    @XmlTransient
+    public List<LevelAdmin> getLevelAdminList1() {
+        return levelAdminList1;
+    }
+
+    public void setLevelAdminList1(List<LevelAdmin> levelAdminList1) {
+        this.levelAdminList1 = levelAdminList1;
+    }
+
+    @XmlTransient
+    public List<Status> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<Status> statusList) {
+        this.statusList = statusList;
+    }
+
+    @XmlTransient
+    public List<Status> getStatusList1() {
+        return statusList1;
+    }
+
+    public void setStatusList1(List<Status> statusList1) {
+        this.statusList1 = statusList1;
     }
 
     @Override

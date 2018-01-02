@@ -44,11 +44,13 @@ public class TarifDao {
         Tarif tarif = new Tarif();
         Admin admin = getDataById(tf.getCreatedBy()); // ini untuk get Adminnya bor
         Status status = getDataStatusById(1); // by id disi 1, itu adalah Aktif
+        Kota kotaAsal = getKota(tf.getKotaAsal());
+        Kota kotaTujuan = getKota(tf.getKotaTujuan());
 //        status = getDataStatusById(tf.getStatus());
 //        DateFormat format = new SimpleDateFormat("yyyy-M-dd");
 
-        tarif.setKotaAsal(tf.getKotaAsal());
-        tarif.setKotaTujuan(tf.getKotaTujuan());
+        tarif.setKotaAsal(kotaAsal);
+        tarif.setKotaTujuan(kotaTujuan);
         tarif.setReguler(BigDecimal.valueOf(tf.getReguler()));
         tarif.setKilat(BigDecimal.valueOf(tf.getKilat()));
         tarif.setOns(BigDecimal.valueOf(tf.getOns()));
@@ -69,11 +71,35 @@ public class TarifDao {
         em.close();
     }
 
+    public boolean cekStatusKota(TarifBean tf) {
+        Tarif idKotaAsal = getDataKotaAsal(tf.getKotaAsal());
+        Tarif idKotaTujuan = getDataKotaTujuan(tf.getKotaTujuan());
+        if (idKotaAsal.getIdTarif() != idKotaTujuan.getIdTarif()) {
+            return true;
+        }
+        return false;
+    }
+
+    public Kota getKota(int kodeKota) {
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Kota.findByKodeKota");
+        query.setParameter("kodeKota", kodeKota);
+        Kota kota = (Kota) query.getSingleResult();
+        return kota;
+    }
+
     public List<Tarif> showAllTarif() {
         em = emf.createEntityManager();
         List<Tarif> trf;
         trf = em.createNamedQuery("Tarif.findAll").getResultList();
         return trf;
+    }
+
+    public List<Status> showAllStatus() {
+        em = emf.createEntityManager();
+        List<Status> status;
+        status = em.createNamedQuery("Kota.findAll").getResultList();
+        return status;
     }
 
     public List<Kota> showAllKota() {
@@ -127,16 +153,17 @@ public class TarifDao {
         tarif = (Tarif) query.getSingleResult();
         return tarif;
     }
-    
+
     // UNTUK CEK KOTA SUDAH TERDAHTAR APA BELUM
-    public Tarif getDataKotaAsal(int kotaAsal){
+    public Tarif getDataKotaAsal(int kotaAsal) {
         em = emf.createEntityManager();
         Query query = em.createNamedQuery("Tarif.findByKotaAsal");
         query.setParameter("kotaAsal", kotaAsal);
         Tarif tarif = (Tarif) query.getSingleResult();
         return tarif;
     }
-    public Tarif getDataKotaTujuan(int kotaTujuan){
+
+    public Tarif getDataKotaTujuan(int kotaTujuan) {
         em = emf.createEntityManager();
         Query query = em.createNamedQuery("Tarif.findByKotaTujuan");
         query.setParameter("kotaTujuan", kotaTujuan);

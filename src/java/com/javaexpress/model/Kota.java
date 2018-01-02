@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,13 +50,17 @@ public class Kota implements Serializable {
     @Column(name = "kode_kota")
     private Integer kodeKota;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "nama_kota")
     private String namaKota;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
@@ -62,6 +68,10 @@ public class Kota implements Serializable {
     private List<Pengiriman> pengirimanList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaPenerima")
     private List<Pengiriman> pengirimanList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaAsal")
+    private List<Tarif> tarifList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaTujuan")
+    private List<Tarif> tarifList1;
     @JoinColumn(name = "kode_provinsi", referencedColumnName = "kode_provinsi")
     @ManyToOne(optional = false)
     private Provinsi kodeProvinsi;
@@ -137,6 +147,24 @@ public class Kota implements Serializable {
 
     public void setPengirimanList1(List<Pengiriman> pengirimanList1) {
         this.pengirimanList1 = pengirimanList1;
+    }
+
+    @XmlTransient
+    public List<Tarif> getTarifList() {
+        return tarifList;
+    }
+
+    public void setTarifList(List<Tarif> tarifList) {
+        this.tarifList = tarifList;
+    }
+
+    @XmlTransient
+    public List<Tarif> getTarifList1() {
+        return tarifList1;
+    }
+
+    public void setTarifList1(List<Tarif> tarifList1) {
+        this.tarifList1 = tarifList1;
     }
 
     public Provinsi getKodeProvinsi() {

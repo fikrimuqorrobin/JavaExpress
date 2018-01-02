@@ -25,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -61,32 +63,49 @@ public class Pengiriman implements Serializable {
     @Column(name = "id_pengiriman")
     private Integer idPengiriman;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "nama_pengirim")
     private String namaPengirim;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 13)
     @Column(name = "telepon_pengirim")
     private String teleponPengirim;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "alamat_pengirim")
     private String alamatPengirim;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "nama_penerima")
     private String namaPenerima;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 13)
     @Column(name = "telepon_penerima")
     private String teleponPenerima;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "alamat_penerima")
     private String alamatPenerima;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "tipe_paket")
     private String tipePaket;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
     @Column(name = "nama_paket")
     private String namaPaket;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "berat_barang")
     private int beratBarang;
     @Column(name = "asuransi")
@@ -95,19 +114,26 @@ public class Pengiriman implements Serializable {
     @Column(name = "harga_barang")
     private BigDecimal hargaBarang;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "jenis_layanan")
     private String jenisLayanan;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "total_tarif")
     private BigDecimal totalTarif;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "no_resi")
     private String noResi;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;

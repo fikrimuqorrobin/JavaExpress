@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,13 +50,17 @@ public class Provinsi implements Serializable {
     @Column(name = "kode_provinsi")
     private Integer kodeProvinsi;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "nama_provinsi")
     private String namaProvinsi;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;

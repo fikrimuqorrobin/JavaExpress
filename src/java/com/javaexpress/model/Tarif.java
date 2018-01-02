@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -37,8 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Tarif.findAll", query = "SELECT t FROM Tarif t")
     , @NamedQuery(name = "Tarif.findByIdTarif", query = "SELECT t FROM Tarif t WHERE t.idTarif = :idTarif")
-    , @NamedQuery(name = "Tarif.findByKotaAsal", query = "SELECT t FROM Tarif t WHERE t.kotaAsal = :kotaAsal")
-    , @NamedQuery(name = "Tarif.findByKotaTujuan", query = "SELECT t FROM Tarif t WHERE t.kotaTujuan = :kotaTujuan")
     , @NamedQuery(name = "Tarif.findByReguler", query = "SELECT t FROM Tarif t WHERE t.reguler = :reguler")
     , @NamedQuery(name = "Tarif.findByKilat", query = "SELECT t FROM Tarif t WHERE t.kilat = :kilat")
     , @NamedQuery(name = "Tarif.findByOns", query = "SELECT t FROM Tarif t WHERE t.ons = :ons")
@@ -54,33 +53,34 @@ public class Tarif implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_tarif")
     private Integer idTarif;
-    @Basic(optional = false)
-    @Column(name = "kota_asal")
-    private int kotaAsal;
-    @Basic(optional = false)
-    @Column(name = "kota_tujuan")
-    private int kotaTujuan;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
+    @NotNull
     @Column(name = "reguler")
     private BigDecimal reguler;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "kilat")
     private BigDecimal kilat;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ons")
     private BigDecimal ons;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "sds")
     private BigDecimal sds;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "hds")
     private BigDecimal hds;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdTime;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
@@ -95,6 +95,12 @@ public class Tarif implements Serializable {
     @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
     @ManyToOne(optional = false)
     private Admin updatedBy;
+    @JoinColumn(name = "kota_asal", referencedColumnName = "kode_kota")
+    @ManyToOne(optional = false)
+    private Kota kotaAsal;
+    @JoinColumn(name = "kota_tujuan", referencedColumnName = "kode_kota")
+    @ManyToOne(optional = false)
+    private Kota kotaTujuan;
 
     public Tarif() {
     }
@@ -102,11 +108,9 @@ public class Tarif implements Serializable {
     public Tarif(Integer idTarif) {
         this.idTarif = idTarif;
     }
-    
-    public Tarif(Integer idTarif, int kotaAsal, int kotaTujuan, BigDecimal reguler, BigDecimal kilat, BigDecimal ons, BigDecimal sds, BigDecimal hds, Date createdTime, Date updatedTime) {
+
+    public Tarif(Integer idTarif, BigDecimal reguler, BigDecimal kilat, BigDecimal ons, BigDecimal sds, BigDecimal hds, Date createdTime, Date updatedTime) {
         this.idTarif = idTarif;
-        this.kotaAsal = kotaAsal;
-        this.kotaTujuan = kotaTujuan;
         this.reguler = reguler;
         this.kilat = kilat;
         this.ons = ons;
@@ -122,22 +126,6 @@ public class Tarif implements Serializable {
 
     public void setIdTarif(Integer idTarif) {
         this.idTarif = idTarif;
-    }
-
-    public int getKotaAsal() {
-        return kotaAsal;
-    }
-
-    public void setKotaAsal(int kotaAsal) {
-        this.kotaAsal = kotaAsal;
-    }
-
-    public int getKotaTujuan() {
-        return kotaTujuan;
-    }
-
-    public void setKotaTujuan(int kotaTujuan) {
-        this.kotaTujuan = kotaTujuan;
     }
 
     public BigDecimal getReguler() {
@@ -227,6 +215,22 @@ public class Tarif implements Serializable {
 
     public void setUpdatedBy(Admin updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public Kota getKotaAsal() {
+        return kotaAsal;
+    }
+
+    public void setKotaAsal(Kota kotaAsal) {
+        this.kotaAsal = kotaAsal;
+    }
+
+    public Kota getKotaTujuan() {
+        return kotaTujuan;
+    }
+
+    public void setKotaTujuan(Kota kotaTujuan) {
+        this.kotaTujuan = kotaTujuan;
     }
 
     @Override

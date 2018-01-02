@@ -8,9 +8,11 @@ package com.javaexpress.controller;
 import com.javaexpress.bean.TarifBean;
 import com.javaexpress.dao.TarifDao;
 import com.javaexpress.model.Kota;
+import com.javaexpress.model.Status;
 import com.javaexpress.model.Tarif;
 import java.text.ParseException;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,31 +35,37 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/kota")
-    public String showAll(Model model) {
+    public String showAll(Model model, HttpSession session) {
         TarifBean tarifBean = new TarifBean();
         List<Kota> kota = dao.showAllKota();
         List<Tarif> tarif = dao.showAllTarif();
         model.addAttribute("tarif", tarif);
         model.addAttribute("TarifBean", tarifBean);
         model.addAttribute("kota", kota);
+        session.invalidate();
         return "Tarif";
     }
 
     @RequestMapping(value = "/save")
-    public String tarifSave(@Valid @ModelAttribute("TarifBean") TarifBean tarifBean, BindingResult result, Model model) {
-        if (result.hasErrors()) {
+    public String tarifSave(@Valid @ModelAttribute("TarifBean") TarifBean tarifBean, BindingResult result, Model model, HttpSession session) {
+        String tujuan = "";
+        if (result.hasErrors() && dao.cekStatusKota(tarifBean) == false) {
             System.out.println("Masuk Errors");
             List<Tarif> tarif = dao.showAllTarif();
             List<Kota> kota = dao.showAllKota();
             model.addAttribute("TarifBean", tarifBean);
             model.addAttribute("tarif", tarif);
             model.addAttribute("kota", kota);
-            return "Tarif"; // kembalikan ke JSP jangan REDIRECT!, hati2 bro... 2 hari saya gak tidur grgr ini!
+            session.setAttribute("validasi", "Data Gagal Disimpan Karena Kota Asal Dan Kota Tujuan Sudah Terdaftar");
+            tujuan = "Tarif"; // kembalikan ke JSP jangan REDIRECT!, hati2 bro... 2 hari saya gak tidur grgr ini!
         } else {
             System.out.println("Masuk Ke Save...");
             dao.saveTarif(tarifBean);
+            session.setAttribute("validasi", "Data Berhasil Disimpan");
+            tujuan = "redirect:../home/kota";
+
         }
-        return "redirect:../home/kota";
+        return tujuan;
     }
 
     @RequestMapping(value = "/updateStatus/{idTarif}")
