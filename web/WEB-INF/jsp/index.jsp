@@ -1,14 +1,11 @@
-<% 
-    if(session.getAttribute("admin") == null) { 
-%>
+<%  if(session.getAttribute("admin") == null) { %>
 
-<jsp:include flush="true" page="login.jsp"></jsp:include>
+    <jsp:forward page="login.jsp"></jsp:forward>
 
-<% } else { %>
+<%  } else { %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -20,7 +17,16 @@
 
     <body>
         <h1>Home</h1>
-        <jsp:include page="menu.jsp"></jsp:include>
+        <div name="menu">
+            <%  if(session.getAttribute("level").equals("master")){ %>
+                <jsp:include page="menu_master.jsp"></jsp:include>
+            <%  } else if(session.getAttribute("level").equals("staff")){ %>
+                <jsp:include page="menu_staff.jsp"></jsp:include>
+            <%  } %> 
+        </div>
+        <div name="container">
+            <jsp:include flush="true" page="${file}"></jsp:include>
+        </div>
     </body>
 </html>
 

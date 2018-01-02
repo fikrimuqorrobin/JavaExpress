@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2017 at 09:13 AM
+-- Generation Time: Jan 02, 2018 at 04:01 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `created_time` datetime NOT NULL,
   `updated_time` datetime NOT NULL,
   `status` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
@@ -48,7 +48,12 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 INSERT INTO `admin` (`id_admin`, `username`, `password`, `nama_lengkap`, `level`, `created_by`, `updated_by`, `created_time`, `updated_time`, `status`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ADMIN', 1, 1, 1, '2017-12-28 11:23:30', '2017-12-28 11:23:30', 1),
-(2, 'fikri', '5d4864249b21de08642aa6ff4178b346', 'Fikri', 2, 1, 1, '2017-12-29 14:14:10', '2017-12-29 14:14:10', 1);
+(2, 'fikri', '5d4864249b21de08642aa6ff4178b346', 'Fikri', 2, 1, 1, '2017-12-29 14:14:10', '2017-12-29 14:14:10', 1),
+(3, 'naufal', 'a7ef174d3ed272acd2b72913a7ef9d40', 'Naufal Eka', 2, 1, 1, '2017-12-30 15:49:59', '2017-12-30 15:49:59', 1),
+(4, 'dian', 'f97de4a9986d216a6e0fea62b0450da9', 'Dian Setyadi', 2, 1, 1, '2017-12-30 15:50:16', '2017-12-30 15:50:16', 1),
+(5, 'agas', '215b401f60fafd39ce86a7109ac71ed0', 'Gangzar Agas', 2, 1, 1, '2017-12-30 15:50:39', '2017-12-30 15:50:39', 1),
+(6, 'bima', '7fcba392d4dcca33791a44cd892b2112', 'Bima Sebayang', 2, 1, 1, '2017-12-30 15:50:50', '2017-12-30 15:50:50', 1),
+(7, 'naufal', 'a7ef174d3ed272acd2b72913a7ef9d40', 'Naufal', 2, 1, 1, '2018-01-01 21:15:50', '2018-01-01 21:15:50', 1);
 
 -- --------------------------------------------------------
 
@@ -343,7 +348,7 @@ ALTER TABLE `tracking`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id_admin` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id_admin` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `kota`
 --

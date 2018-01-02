@@ -12,7 +12,7 @@
 
     <body>
         <h1>Form Login</h1>
-        <form:form action="${pageContext.request.contextPath}/home/check" modelAttribute="loginBean" method="POST" >
+        <form:form action="${pageContext.request.contextPath}/admin/check" modelAttribute="loginBean" method="POST" >
             <form:label path="username">Username</form:label>
             <form:input path="username" required="true"></form:input><br/>
             <form:label path="password">Password</form:label>

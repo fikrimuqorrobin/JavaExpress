@@ -13,6 +13,6 @@
     </head>
     <body>
         <h1>Sukses</h1>
-        <jsp:include page="menu.jsp"></jsp:include>
+        <a href="${pageContext.request.contextPath}/admin">Home</a>
     </body>
 </html>

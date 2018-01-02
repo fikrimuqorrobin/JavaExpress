@@ -85,7 +85,25 @@ public class AdminDao {
     public List<Admin> findAllStaff(){
         em = emf.createEntityManager();
         List<Admin> staff;
-        staff = em.createQuery("select a from Admin a where a.level.idLevel = 2").getResultList();
+        staff = em.createQuery("select a from Admin a where a.level.idLevel = 2 AND a.status.idStatus = 1").getResultList();
         return staff;
+    }
+    
+    @org.springframework.transaction.annotation.Transactional
+    public void updateAdmin(Admin admin){
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(admin);
+        em.getTransaction().commit();
+        em.close();
+    }
+    
+    @org.springframework.transaction.annotation.Transactional
+    public void hapusStaff(Admin staff){
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(staff);
+        em.getTransaction().commit();
+        em.close();
     }
 }
