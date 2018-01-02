@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    
+
     @Autowired
     AdminDao ad;
 
@@ -33,22 +33,22 @@ public class AdminController {
         model.addAttribute("file", "beranda.jsp");
         return "index";
     }
-    
+
     @RequestMapping("/check")
     public String checkLogin(HttpSession session, @ModelAttribute("loginBean") LoginBean loginBean, Model model) {
         Admin admin = ad.findByUsername(loginBean.getUsername());
         LevelAdmin levelAdmin = ad.findLevelById(loginBean.getLevel());
-        
+
         List<LevelAdmin> levels = ad.tampilLevelAdmin();
         model.addAttribute("level", levels);
-        
-        if(admin.getUsername()==null) {
+
+        if (admin.getUsername() == null) {
             model.addAttribute("errMsg", "Username salah");
             return "index";
         }
-        
+
         String encryptedPassword = PasswordDigest.createEncryptedPassword(loginBean.getPassword());
-        if(!encryptedPassword.equals(admin.getPassword())) {
+        if (!encryptedPassword.equals(admin.getPassword())) {
             model.addAttribute("errMsg", "Password salah");
             return "index";
         }
@@ -62,7 +62,7 @@ public class AdminController {
             model.addAttribute("errMsg", "Level Admin Tidak Cocok");
             return "index";
         } else {
-            if(admin.getLevel().getIdLevel() == 1){
+            if (admin.getLevel().getIdLevel() == 1) {
                 session.setAttribute("admin", admin);
                 session.setAttribute("level", "master");
                 model.addAttribute("file", "beranda.jsp");
@@ -74,23 +74,23 @@ public class AdminController {
             return "index";
         }
     }
-    
-    @RequestMapping("/logout") 
+
+    @RequestMapping("/logout")
     public String logout(HttpSession session, Model model) {
         session.invalidate();
         //session.removeAttribute("user");
         return "redirect:/admin";
     }
-    
+
     @RequestMapping("/staff")
-    public String dataStaff(Model model){
+    public String dataStaff(Model model) {
         List<Admin> staff = ad.findAllStaff();
         model.addAttribute("file", "dataStaff.jsp");
         model.addAttribute("staff", staff);
         return "index";
     }
-        
-    @RequestMapping("/input/staff") 
+
+    @RequestMapping("/input/staff")
     public String registerForm(Model model) {
         RegisterStaffBean registerBean = new RegisterStaffBean();
         List<LevelAdmin> levels = ad.tampilLevelAdmin();
@@ -99,9 +99,9 @@ public class AdminController {
         model.addAttribute("file", "registerStaff.jsp");
         return "index";
     }
-    
-    @RequestMapping("/input/staff/save") 
-    public String saveRegistration(HttpSession session, @ModelAttribute("registerBean") RegisterStaffBean registerBean, 
+
+    @RequestMapping("/input/staff/save")
+    public String saveRegistration(HttpSession session, @ModelAttribute("registerBean") RegisterStaffBean registerBean,
             Model model) {
         Admin admin = new Admin();
         Admin master = (Admin) session.getAttribute("admin");

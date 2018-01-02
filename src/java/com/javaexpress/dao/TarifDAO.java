@@ -5,12 +5,12 @@
  */
 package com.javaexpress.dao;
 
-import com.javaexpress.model.Kota;
+import com.javaexpress.model.Tarif;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class KotaDAO  implements KotaDAOInterface{
-    
-    static final Logger logger = Logger.getLogger(KotaDAO.class.getName());
-    
+public class TarifDAO implements TarifDAOInterface {
+
     @PersistenceUnit
     EntityManagerFactory emf;
-    
+
     private EntityManager em;
 
     /**
@@ -44,31 +42,43 @@ public class KotaDAO  implements KotaDAOInterface{
     }
 
     @Override
-    public void saveKota(Kota kota) {
+    public void saveTarif(Tarif tarif) {
         em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(kota);
+        em.persist(tarif);
         em.getTransaction().commit();
         em.close();
-        logger.info("Kota Berhasil Disimpan "+kota);
     }
 
     @Override
-    public Kota findKotabyID(int kode_kota) {
+    public List<Tarif> findAllTarif() {
         em = emf.createEntityManager();
-        logger.info("Pencarian Kota Berdasarkan ID "+kode_kota);
-        return em.find(Kota.class, kode_kota);
-       
+        List<Tarif> listTarif;
+        listTarif = em.createNamedQuery("Tarif.findAll").getResultList();
+        return listTarif;
     }
 
     @Override
-    public List<Kota> listKota() {
-    em = emf.createEntityManager();
-    List<Kota> listKota;
-    listKota = em.createNamedQuery("Kota.findAll").getResultList();
-    logger.info("List Kota All "+listKota);
-    return listKota; 
+    public Tarif findByIdTarif(int id) {
+        em = emf.createEntityManager();
+
+        Tarif tarif = new Tarif();
+        tarif = (Tarif) em.createNamedQuery("Tarif.findByIdTarif").setParameter("idTarif", id).getSingleResult();
+        return tarif;
+
     }
-    
-    
+
+    @Override
+    public void updateTarif(int id) {
+        em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Tarif.findByIdTarif");
+        query.setParameter("idTarif", id);
+        Tarif tarif = new Tarif();
+        tarif = (Tarif) query.getSingleResult();
+        em.getTransaction().begin();
+        em.persist(tarif);
+        em.getTransaction().commit();
+        em.close();
+
+    }
 }
