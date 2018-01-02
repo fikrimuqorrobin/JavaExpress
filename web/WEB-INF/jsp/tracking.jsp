@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Lacak Pengiriman</h1>
-        <form:form action="${pageContext.request.contextPath}home/tracking/" modelAttribute="loginBean" method="POST" >
-    </body>
+        <form:form action="${pageContext.request.contextPath}home/tracking/" modelAttribute="TrackingBean" method="POST" >
+        
+        </body>
 </html>
