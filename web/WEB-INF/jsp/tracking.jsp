@@ -13,7 +13,9 @@
     </head>
     <body>
         <h1>Lacak Pengiriman</h1>
-        <form:form action="${pageContext.request.contextPath}home/tracking/" modelAttribute="TrackingBean" method="POST" >
-        
-        </body>
+        <jsp:include page="menu.jsp"></jsp:include>
+    <c:forEach var="t" items="${trackingDAO}">
+            <p>${t.getNoResiId()}</p>
+        </c:forEach>
+    </body>
 </html>
