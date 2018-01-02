@@ -5,12 +5,12 @@
  */
 package com.javaexpress.dao;
 
-import com.javaexpress.model.Provinsi;
+import com.javaexpress.model.Status;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class ProvinsiDAO implements ProvinsiDAOInterface {
-
-    private static final Logger logger = Logger.getLogger(ProvinsiDAO.class.getName());
+public class StatusDAO implements StatusDAOInterface {
 
     @PersistenceUnit
     EntityManagerFactory emf;
@@ -30,31 +28,35 @@ public class ProvinsiDAO implements ProvinsiDAOInterface {
     private EntityManager em;
 
     @Override
-    public void saveProvinsi(Provinsi provinsi) {
+    public void saveStatus(Status status) {
         em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(provinsi);
+        em.persist(status);
         em.getTransaction().commit();
-        logger.info("Provinsi Berhasil Disimpan " + provinsi.getNamaProvinsi() + " " + "Dibuat Oleh Admin ID " + provinsi.getCreatedBy());
         em.close();
+    }
+
+    @Override
+    public List<Status> findAllStatus() {
+        em = emf.createEntityManager();
+        List<Status> listStatus;
+        listStatus = em.createNamedQuery("Status.findAll").getResultList();
+        return listStatus;
 
     }
 
     @Override
-    public List<Provinsi> findAllProvinsi() {
-        em = emf.createEntityManager();
-        List<Provinsi> listProvinsi;
-        listProvinsi = em.createNamedQuery("Provinsi.findAll").getResultList();
-        logger.info(("List All Provinsi "+listProvinsi));
-        return listProvinsi;
-    }
+    public void updateStatus(int id) {
 
-    @Override
-    public Provinsi findById(int kode_provinsi) {
         em = emf.createEntityManager();
-        em.find(Provinsi.class, kode_provinsi);
-        logger.info("Pencarian ID "+kode_provinsi);
-        return (Provinsi) em;
+        Query query = em.createNamedQuery("Status.findByIdStatus");
+        query.setParameter("idStatus", id);
+        Status status = new Status();
+        status = (Status) query.getSingleResult();
+        em.getTransaction().begin();
+        em.merge(status);
+        em.getTransaction().commit();
+        em.close();
     }
 
     /**
