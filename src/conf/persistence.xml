@@ -9,8 +9,13 @@
     <class>com.javaexpress.model.Pengiriman</class>
     <class>com.javaexpress.model.Admin</class>
     <class>com.javaexpress.model.Provinsi</class>
+<<<<<<< HEAD
     <class>com.javaexpress.model.LevelAdmin</class>
     <class>com.javaexpress.model.Status</class>
+=======
+    <class>com.javaexpress.model.Status</class>
+    <class>com.javaexpress.model.LevelAdmin</class>
+>>>>>>> origin/master
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>

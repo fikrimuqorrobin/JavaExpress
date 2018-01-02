@@ -43,6 +43,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Kota.findByUpdatedTime", query = "SELECT k FROM Kota k WHERE k.updatedTime = :updatedTime")})
 public class Kota implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaAsal")
+    private List<Tarif> tarifList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaTujuan")
+    private List<Tarif> tarifList1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,10 +73,6 @@ public class Kota implements Serializable {
     private List<Pengiriman> pengirimanList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaPenerima")
     private List<Pengiriman> pengirimanList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaAsal")
-    private List<Tarif> tarifList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kotaTujuan")
-    private List<Tarif> tarifList1;
     @JoinColumn(name = "kode_provinsi", referencedColumnName = "kode_provinsi")
     @ManyToOne(optional = false)
     private Provinsi kodeProvinsi;
@@ -149,24 +150,6 @@ public class Kota implements Serializable {
         this.pengirimanList1 = pengirimanList1;
     }
 
-    @XmlTransient
-    public List<Tarif> getTarifList() {
-        return tarifList;
-    }
-
-    public void setTarifList(List<Tarif> tarifList) {
-        this.tarifList = tarifList;
-    }
-
-    @XmlTransient
-    public List<Tarif> getTarifList1() {
-        return tarifList1;
-    }
-
-    public void setTarifList1(List<Tarif> tarifList1) {
-        this.tarifList1 = tarifList1;
-    }
-
     public Provinsi getKodeProvinsi() {
         return kodeProvinsi;
     }
@@ -199,6 +182,7 @@ public class Kota implements Serializable {
         this.updatedBy = updatedBy;
     }
 
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -222,6 +206,24 @@ public class Kota implements Serializable {
     @Override
     public String toString() {
         return "com.javaexpress.model.Kota[ kodeKota=" + kodeKota + " ]";
+    }
+
+    @XmlTransient
+    public List<Tarif> getTarifList() {
+        return tarifList;
+    }
+
+    public void setTarifList(List<Tarif> tarifList) {
+        this.tarifList = tarifList;
+    }
+
+    @XmlTransient
+    public List<Tarif> getTarifList1() {
+        return tarifList1;
+    }
+
+    public void setTarifList1(List<Tarif> tarifList1) {
+        this.tarifList1 = tarifList1;
     }
     
 }

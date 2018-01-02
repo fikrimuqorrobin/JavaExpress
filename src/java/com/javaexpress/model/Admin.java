@@ -45,6 +45,36 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Admin.findByUpdatedTime", query = "SELECT a FROM Admin a WHERE a.updatedTime = :updatedTime")})
 public class Admin implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "created_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdTime;
+    @Basic(optional = false)
+    @Column(name = "updated_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedTime;
+    @JoinColumn(name = "status", referencedColumnName = "id_status")
+    @ManyToOne(optional = false)
+    private Status status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Admin> adminList;
+    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin createdBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Admin> adminList1;
+    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
+    @ManyToOne(optional = false)
+    private Admin updatedBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<LevelAdmin> levelAdminList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<LevelAdmin> levelAdminList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private List<Status> statusList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
+    private List<Status> statusList1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,16 +97,7 @@ public class Admin implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "nama_lengkap")
     private String namaLengkap;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdTime;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "updated_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedTime;
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Provinsi> provinsiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
@@ -98,30 +119,12 @@ public class Admin implements Serializable {
     private LevelAdmin level;
     @JoinColumn(name = "status", referencedColumnName = "id_status")
     @ManyToOne(optional = false)
-    private Status status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<Admin> adminList;
-    @JoinColumn(name = "created_by", referencedColumnName = "id_admin")
-    @ManyToOne(optional = false)
-    private Admin createdBy;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<Admin> adminList1;
-    @JoinColumn(name = "updated_by", referencedColumnName = "id_admin")
-    @ManyToOne(optional = false)
-    private Admin updatedBy;
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private List<Tracking> trackingList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
     private List<Tracking> trackingList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<LevelAdmin> levelAdminList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<LevelAdmin> levelAdminList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private List<Status> statusList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "updatedBy")
-    private List<Status> statusList1;
-
+   
     public Admin() {
     }
 
@@ -386,5 +389,6 @@ public class Admin implements Serializable {
     public String toString() {
         return "com.javaexpress.model.Admin[ idAdmin=" + idAdmin + " ]";
     }
+
     
 }
