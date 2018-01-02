@@ -7,6 +7,7 @@ package com.javaexpress.dao;
 
 import com.javaexpress.model.Tracking;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class TrackingDAO implements TrackingDAOInterface {
+
+    static final Logger logger = Logger.getLogger(TrackingDAO.class.getName());
 
     /**
      * @return the em
@@ -38,12 +41,14 @@ public class TrackingDAO implements TrackingDAOInterface {
     EntityManagerFactory emf;
 
     private EntityManager em;
+
     @Override
     public List<Tracking> findAllTracking() {
-    em = emf.createEntityManager();
-    List<Tracking> listTracking;
-    listTracking = em.createNamedQuery("Tarif.findAll").getResultList();
-    return listTracking;
+        em = emf.createEntityManager();
+        List<Tracking> listTracking;
+        listTracking = em.createNamedQuery("Tarif.findAll").getResultList();
+        logger.info("List All Tracking " + listTracking);
+        return listTracking;
     }
-    
+
 }

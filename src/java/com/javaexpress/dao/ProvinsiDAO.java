@@ -7,6 +7,7 @@ package com.javaexpress.dao;
 
 import com.javaexpress.model.Provinsi;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProvinsiDAO implements ProvinsiDAOInterface {
 
+    private static final Logger logger = Logger.getLogger(ProvinsiDAO.class.getName());
+
     @PersistenceUnit
     EntityManagerFactory emf;
 
@@ -32,6 +35,7 @@ public class ProvinsiDAO implements ProvinsiDAOInterface {
         em.getTransaction().begin();
         em.persist(provinsi);
         em.getTransaction().commit();
+        logger.info("Provinsi Berhasil Disimpan " + provinsi.getNamaProvinsi() + " " + "Dibuat Oleh Admin ID " + provinsi.getCreatedBy());
         em.close();
 
     }
@@ -41,6 +45,7 @@ public class ProvinsiDAO implements ProvinsiDAOInterface {
         em = emf.createEntityManager();
         List<Provinsi> listProvinsi;
         listProvinsi = em.createNamedQuery("Provinsi.findAll").getResultList();
+        logger.info(("List All Provinsi "+listProvinsi));
         return listProvinsi;
     }
 
@@ -48,6 +53,7 @@ public class ProvinsiDAO implements ProvinsiDAOInterface {
     public Provinsi findById(int kode_provinsi) {
         em = emf.createEntityManager();
         em.find(Provinsi.class, kode_provinsi);
+        logger.info("Pencarian ID "+kode_provinsi);
         return (Provinsi) em;
     }
 

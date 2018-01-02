@@ -50,12 +50,15 @@ public class KotaDAO  implements KotaDAOInterface{
         em.persist(kota);
         em.getTransaction().commit();
         em.close();
+        logger.info("Kota Berhasil Disimpan "+kota);
     }
 
     @Override
     public Kota findKotabyID(int kode_kota) {
         em = emf.createEntityManager();
+        logger.info("Pencarian Kota Berdasarkan ID "+kode_kota);
         return em.find(Kota.class, kode_kota);
+       
     }
 
     @Override
@@ -63,6 +66,7 @@ public class KotaDAO  implements KotaDAOInterface{
     em = emf.createEntityManager();
     List<Kota> listKota;
     listKota = em.createNamedQuery("Kota.findAll").getResultList();
+    logger.info("List Kota All "+listKota);
     return listKota; 
     }
     
