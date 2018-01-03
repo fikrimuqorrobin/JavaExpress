@@ -21,8 +21,6 @@
        
        <h1>ONS</h1>Tarif Awal ${tarif.ons} setelah ${berat.beratBarang} kg ${berat.beratBarang * tarif.ons}
        
-       <h1>ONS</h1>Tarif Awal ${tarif.ons} setelah ${berat.beratBarang} kg ${berat.beratBarang * tarif.ons}
-       
        <h1>HDS</h1>Tarif Awal ${tarif.hds} setelah ${berat.beratBarang} kg ${berat.beratBarang * tarif.hds}
        
        <h1>SDS</h1>Tarif Awal ${tarif.sds} setelah ${berat.beratBarang} kg ${berat.beratBarang * tarif.sds}
