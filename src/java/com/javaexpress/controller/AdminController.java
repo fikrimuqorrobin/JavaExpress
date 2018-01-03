@@ -4,6 +4,7 @@ import com.javaexpress.bean.LoginBean;
 import com.javaexpress.bean.RegisterStaffBean;
 import com.javaexpress.bean.TrackingBean;
 import com.javaexpress.dao.AdminDao;
+import com.javaexpress.dao.KotaDAO;
 import com.javaexpress.dao.TrackingDAO;
 import com.javaexpress.model.Admin;
 import com.javaexpress.model.Kota;
@@ -14,7 +15,7 @@ import com.javaexpress.utils.PasswordDigest;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import static jdk.nashorn.internal.runtime.Debug.id;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,8 @@ public class AdminController {
     AdminDao ad;
     @Autowired
     TrackingDAO tdao;
+    @Autowired
+    KotaDAO kotaDAO;
 
     @RequestMapping()
     public String halamanIndex(Model model) {
@@ -106,17 +109,16 @@ public class AdminController {
     }
     
     @RequestMapping(value = "/tracking/find")
-    public String trackingFind (@ModelAttribute("tracking")TrackingBean trackingBean, Model model){
+    public String trackingFind (@ModelAttribute("trackingBean")TrackingBean trackingBean, Model model){
             Tracking tracking = new Tracking();
-            Pengiriman pengiriman = new Pengiriman();
-            pengiriman.setNoResi(trackingBean.getNomorResi());
-            Kota kotaAsal = new Kota();
-            //kotaAsal.
-            //Kota kotaTujuan = new Kota();
+            Pengiriman pengiriman = tdao.findbyNoResi(trackingBean.getNomorResi());
+            tracking= tdao.findTrackingByID(pengiriman.getIdPengiriman());
             
-        //tracking = tdao.findStatusByNoResi();
-       
-        return "tracking";
+            model.addAttribute("tracking", pengiriman.getNoResi());
+            model.addAttribute("trackings",pengiriman);
+            model.addAttribute("statustracking",pengiriman.getTrackingList());
+                 
+        return "detailTracking";
     }
     
     @RequestMapping("/input/staff/save") 

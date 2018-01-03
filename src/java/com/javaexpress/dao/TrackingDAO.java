@@ -47,15 +47,15 @@ public class TrackingDAO {
         this.em = em;
     }
 
-    public Pengiriman findbyNoResi(String no_resi) {
-        Pengiriman pengiriman = new Pengiriman();
+    public Pengiriman findbyNoResi(String NoResi) {
+        Pengiriman pengiriman = null;
         try {
             em = emf.createEntityManager();
-            Query query = em.createQuery("Select p from pengiriman p where p.no_resi = :no_resi");
-            query.setParameter("no_resi", no_resi);
+            Query query = em.createQuery("Select p from Pengiriman p where p.noResi = :NoResi");
+            query.setParameter("NoResi", NoResi);
             pengiriman = (Pengiriman) query.getSingleResult();
         } catch (NoResultException nre) {
-            logger.severe("No Resi Tidak Ada");
+            logger.severe("No Resi Tidak Ada "+nre.getMessage());
         }
         return pengiriman;
     }
@@ -78,5 +78,10 @@ public class TrackingDAO {
 
     public List<Tracking> findbyNoResi() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Tracking findTrackingByID( int id_pengiriman){
+         em = emf.createEntityManager();
+         return em.find(Tracking.class, id_pengiriman);
     }
 }

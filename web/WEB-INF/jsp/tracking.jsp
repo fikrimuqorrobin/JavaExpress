@@ -18,17 +18,13 @@
         <h1>Lacak Pengiriman</h1>
         <!--<h1>${trackingtest.kodePengiriman}</h1>-->
 
-        <form:form action="${pageContext.request.contextPath}/home/tracking" modelAttribute="trackingBean" method ="POST">
+        <form:form action="${pageContext.request.contextPath}/home/tracking/find" modelAttribute="trackingBean" method ="POST">
             <table>
                 <tr>
                     <td><form:label path="nomorResi">Cek No resi</form:label></td>
                     <form:input path="nomorResi"/>
                     <form:button name="searchButton" value="submit">Cari</form:button>
-                    <td><form:select path="nomorResi" style="width: 100%"></td> </form:select>
-                    <c:forEach var="t" items="${trackingDAO.findbyNoResi()}">
-                        
-                        <form:option value="${idTracking}">${status_pengiriman}</form:option>
-                    </c:forEach>
+                   
             </table>    
 
         </form:form>
