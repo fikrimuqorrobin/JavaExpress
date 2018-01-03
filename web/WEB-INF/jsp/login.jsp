@@ -14,13 +14,13 @@
         <h1>Form Login</h1>
         <form:form action="${pageContext.request.contextPath}/home/check" modelAttribute="loginBean" method="POST" >
             <form:label path="username">Username</form:label>
-            <form:input path="username" required="true"></form:input><br/>
+            <form:input path="username" required="true"/><br/>
             <form:label path="password">Password</form:label>
-            <form:password path="password" required="true"></form:password><br/>
+            <form:password path="password" required="true"/><br/>
             <form:label path="level">Level</form:label>
             <form:select path="level">
                 <c:forEach var="lvl" items="${level}">
-                    <form:option value="${lvl.getIdLevel()}">${lvl.getLevel()}</form:option>
+                    <form:option value="${lvl.level.getIdLevel()}">${lvl.level.getLevel()}</form:option>
                 </c:forEach>
             </form:select><br/>
             <form:button name="submitButton" value="Submit">LOGIN</form:button>

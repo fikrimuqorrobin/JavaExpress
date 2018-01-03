@@ -6,12 +6,15 @@ import com.javaexpress.bean.TrackingBean;
 import com.javaexpress.dao.AdminDao;
 import com.javaexpress.dao.TrackingDAO;
 import com.javaexpress.model.Admin;
+import com.javaexpress.model.Kota;
 import com.javaexpress.model.LevelAdmin;
+import com.javaexpress.model.Pengiriman;
 import com.javaexpress.model.Tracking;
 import com.javaexpress.utils.PasswordDigest;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import static jdk.nashorn.internal.runtime.Debug.id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,7 @@ public class AdminController {
     
     @Autowired
     AdminDao ad;
+    @Autowired
     TrackingDAO tdao;
 
     @RequestMapping()
@@ -95,10 +99,24 @@ public class AdminController {
     @RequestMapping("/tracking")
     public String trackingForm(Model model){
         TrackingBean trackingBean = new TrackingBean();
-        List<Tracking> tracking = tdao.findbyNoResi();
+        List<Tracking> tracking = tdao.tampilListNoResi();
+         model.addAttribute("trackingBean",trackingBean);
         model.addAttribute("tracking", tracking);
-        model.addAttribute("trackingBean",trackingBean);
-        return "home";
+        return "tracking";
+    }
+    
+    @RequestMapping(value = "/tracking/find")
+    public String trackingFind (@ModelAttribute("tracking")TrackingBean trackingBean, Model model){
+            Tracking tracking = new Tracking();
+            Pengiriman pengiriman = new Pengiriman();
+            pengiriman.setNoResi(trackingBean.getNomorResi());
+            Kota kotaAsal = new Kota();
+            //kotaAsal.
+            //Kota kotaTujuan = new Kota();
+            
+        //tracking = tdao.findStatusByNoResi();
+       
+        return "tracking";
     }
     
     @RequestMapping("/input/staff/save") 
