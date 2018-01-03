@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
@@ -40,13 +41,25 @@ public class CekTarifDAO {
     }
 
     public Tarif findTarifByIdKota(Kota kotaAsal, Kota kotaTujuan) {
+        Tarif tarif = new Tarif();
+        try {
         em = emf.createEntityManager();
         Query query = em.createQuery("SELECT t FROM Tarif t WHERE t.kotaAsal = :kotaAsal AND t.kotaTujuan = :kotaTujuan");
         query.setParameter("kotaAsal", kotaAsal);
         query.setParameter("kotaTujuan", kotaTujuan);
-        Tarif tarif = new Tarif();
+        
         tarif = (Tarif) query.getSingleResult();
         em.close();
+        } catch (NoResultException e) {
+            logger.warning("data Tidak ada dalam database");
+        }
+//        em = emf.createEntityManager();
+//        Query query = em.createQuery("SELECT t FROM Tarif t WHERE t.kotaAsal = :kotaAsal AND t.kotaTujuan = :kotaTujuan");
+//        query.setParameter("kotaAsal", kotaAsal);
+//        query.setParameter("kotaTujuan", kotaTujuan);
+//        Tarif tarif = new Tarif();
+//        tarif = (Tarif) query.getSingleResult();
+//        em.close();
         return tarif;
     }
      
