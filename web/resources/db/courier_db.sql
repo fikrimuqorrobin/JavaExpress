@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2017 at 09:40 AM
+-- Generation Time: Jan 02, 2018 at 04:01 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -34,15 +34,26 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `username` varchar(200) NOT NULL,
   `password` text NOT NULL,
   `nama_lengkap` varchar(200) NOT NULL,
-  `level` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `level` int(1) NOT NULL,
+  `created_by` int(10) NOT NULL,
+  `updated_by` int(10) NOT NULL,
+  `created_time` datetime NOT NULL,
+  `updated_time` datetime NOT NULL,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `username`, `password`, `nama_lengkap`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ADMIN', 1);
+INSERT INTO `admin` (`id_admin`, `username`, `password`, `nama_lengkap`, `level`, `created_by`, `updated_by`, `created_time`, `updated_time`, `status`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'ADMIN', 1, 1, 1, '2017-12-28 11:23:30', '2017-12-28 11:23:30', 1),
+(2, 'fikri', '5d4864249b21de08642aa6ff4178b346', 'Fikri', 2, 1, 1, '2017-12-29 14:14:10', '2017-12-29 14:14:10', 1),
+(3, 'naufal', 'a7ef174d3ed272acd2b72913a7ef9d40', 'Naufal Eka', 2, 1, 1, '2017-12-30 15:49:59', '2017-12-30 15:49:59', 1),
+(4, 'dian', 'f97de4a9986d216a6e0fea62b0450da9', 'Dian Setyadi', 2, 1, 1, '2017-12-30 15:50:16', '2017-12-30 15:50:16', 1),
+(5, 'agas', '215b401f60fafd39ce86a7109ac71ed0', 'Gangzar Agas', 2, 1, 1, '2017-12-30 15:50:39', '2017-12-30 15:50:39', 1),
+(6, 'bima', '7fcba392d4dcca33791a44cd892b2112', 'Bima Sebayang', 2, 1, 1, '2017-12-30 15:50:50', '2017-12-30 15:50:50', 1),
+(7, 'naufal', 'a7ef174d3ed272acd2b72913a7ef9d40', 'Naufal', 2, 1, 1, '2018-01-01 21:15:50', '2018-01-01 21:15:50', 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `kota` (
   `created_time` datetime NOT NULL,
   `updated_time` datetime NOT NULL,
   `status` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kota`
@@ -111,16 +122,21 @@ INSERT INTO `kota` (`kode_kota`, `nama_kota`, `kode_provinsi`, `created_by`, `up
 DROP TABLE IF EXISTS `level_admin`;
 CREATE TABLE IF NOT EXISTS `level_admin` (
 `id_level` int(1) NOT NULL,
-  `level` varchar(50) NOT NULL
+  `level` varchar(50) NOT NULL,
+  `created_by` int(10) NOT NULL,
+  `updated_by` int(10) NOT NULL,
+  `created_time` datetime NOT NULL,
+  `updated_time` datetime NOT NULL,
+  `status` int(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `level_admin`
 --
 
-INSERT INTO `level_admin` (`id_level`, `level`) VALUES
-(1, 'Master'),
-(2, 'Staff');
+INSERT INTO `level_admin` (`id_level`, `level`, `created_by`, `updated_by`, `created_time`, `updated_time`, `status`) VALUES
+(1, 'Master', 1, 1, '2017-12-28 13:33:22', '2017-12-28 13:33:22', 1),
+(2, 'Staff', 1, 1, '2017-12-28 13:33:24', '2017-12-28 13:33:24', 1);
 
 -- --------------------------------------------------------
 
@@ -153,7 +169,16 @@ CREATE TABLE IF NOT EXISTS `pengiriman` (
   `created_time` datetime NOT NULL,
   `updated_time` datetime NOT NULL,
   `status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengiriman`
+--
+
+INSERT INTO `pengiriman` (`id_pengiriman`, `nama_pengirim`, `telepon_pengirim`, `kota_pengirim`, `alamat_pengirim`, `nama_penerima`, `telepon_penerima`, `kota_penerima`, `alamat_penerima`, `tipe_paket`, `nama_paket`, `berat_barang`, `asuransi`, `harga_barang`, `jenis_layanan`, `tarif`, `total_tarif`, `no_resi`, `created_by`, `updated_by`, `created_time`, `updated_time`, `status`) VALUES
+(8, 'coba', 'coba', 4, 'coba', 'coba', 'coba', 3, 'coba', 'coba', 'coba', 2, 'T', '10000.00', 'ons', 8, '64000.00', '3apajaboleh4', 1, 1, '2017-12-29 16:52:56', '2017-12-29 16:52:58', 1),
+(10, 'Bima Satrya Sebayang', '087768339292', 12, 'Jln. Calon Mantu yang Nggak Jadi', 'Bapak Muhajidin', '08120100203', 6, 'Jln. Mertua Tak Sampai', 'Dokumen', 'Mobil Mewah Tapi Bo''ong', 3, 'T', '12000.00', 'reguler', 5, '10350.00', '6apajaboleh12', 1, 1, '2017-12-29 17:13:07', '2017-12-29 17:13:08', 1),
+(12, 'Bima Satrya Sebayang', '087768339292', 10, 'Jln. Calon Mantu yang Nggak Jadi', 'Bapak Muhajidin', '08120100203', 5, 'Jln. Mertua Tak Sampai', 'Dokumen', 'Mobil Mewah Tapi Bo''ong', 3, 'T', '12000.00', 'reguler', 1, '13500.00', '5apajaboleh10', 1, 1, '2017-12-29 17:14:12', '2017-12-29 17:14:14', 1);
 
 -- --------------------------------------------------------
 
@@ -193,16 +218,20 @@ INSERT INTO `provinsi` (`kode_provinsi`, `nama_provinsi`, `created_by`, `updated
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE IF NOT EXISTS `status` (
 `id_status` int(1) NOT NULL,
-  `status` varchar(100) NOT NULL
+  `status` varchar(100) NOT NULL,
+  `created_by` int(10) NOT NULL,
+  `updated_by` int(10) NOT NULL,
+  `created_time` datetime NOT NULL,
+  `updated_time` datetime NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `status`
 --
 
-INSERT INTO `status` (`id_status`, `status`) VALUES
-(1, 'Aktif'),
-(2, 'Tidak Aktif');
+INSERT INTO `status` (`id_status`, `status`, `created_by`, `updated_by`, `created_time`, `updated_time`) VALUES
+(1, 'Aktif', 1, 1, '2017-12-28 13:33:22', '2017-12-28 13:33:22'),
+(2, 'Tidak Aktif', 1, 1, '2017-12-28 13:33:23', '2017-12-28 13:33:23');
 
 -- --------------------------------------------------------
 
@@ -225,7 +254,21 @@ CREATE TABLE IF NOT EXISTS `tarif` (
   `created_time` datetime NOT NULL,
   `updated_time` datetime NOT NULL,
   `status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tarif`
+--
+
+INSERT INTO `tarif` (`id_tarif`, `kota_asal`, `kota_tujuan`, `reguler`, `kilat`, `ons`, `sds`, `hds`, `created_by`, `updated_by`, `created_time`, `updated_time`, `status`) VALUES
+(1, 5, 10, '4500.00', '12000.00', '23500.00', '46700.00', '78900.00', 1, 1, '2017-12-29 09:11:40', '2017-12-29 09:11:40', 1),
+(2, 9, 27, '6000.00', '19300.00', '34500.00', '45500.00', '79800.00', 1, 1, '2017-12-29 09:13:09', '2017-12-29 09:13:09', 1),
+(3, 29, 30, '9000.00', '23400.00', '38900.00', '56000.00', '890000.00', 1, 1, '2017-12-29 09:21:15', '2017-12-29 09:21:15', 1),
+(4, 5, 21, '6790.00', '12450.00', '32900.00', '65770.00', '89800.00', 1, 1, '2017-12-29 12:45:27', '2017-12-29 12:45:27', 1),
+(5, 6, 12, '3450.00', '9900.00', '23990.00', '45000.00', '123000.00', 1, 1, '2017-12-29 13:39:15', '2017-12-29 13:39:15', 1),
+(6, 4, 9, '10000.00', '12500.00', '15000.00', '17500.00', '20000.00', 1, 1, '2017-12-29 14:40:29', '2017-12-29 14:40:29', 1),
+(7, 9, 4, '10000.00', '12500.00', '15000.00', '17500.00', '20000.00', 1, 1, '2017-12-29 00:00:00', '2017-12-29 00:00:00', 1),
+(8, 3, 4, '3210.00', '11200.00', '32000.00', '67700.00', '109000.00', 1, 1, '2017-12-29 15:58:40', '2017-12-29 15:58:40', 1);
 
 -- --------------------------------------------------------
 
@@ -253,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `tracking` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
- ADD PRIMARY KEY (`id_admin`), ADD KEY `level` (`level`);
+ ADD PRIMARY KEY (`id_admin`), ADD KEY `level` (`level`), ADD KEY `created_by` (`created_by`,`updated_by`,`status`), ADD KEY `status` (`status`), ADD KEY `updated_by` (`updated_by`);
 
 --
 -- Indexes for table `kota`
@@ -265,7 +308,7 @@ ALTER TABLE `kota`
 -- Indexes for table `level_admin`
 --
 ALTER TABLE `level_admin`
- ADD PRIMARY KEY (`id_level`);
+ ADD PRIMARY KEY (`id_level`), ADD KEY `created_by` (`created_by`,`updated_by`,`status`), ADD KEY `status` (`status`), ADD KEY `updated_by` (`updated_by`);
 
 --
 -- Indexes for table `pengiriman`
@@ -283,7 +326,7 @@ ALTER TABLE `provinsi`
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
- ADD PRIMARY KEY (`id_status`);
+ ADD PRIMARY KEY (`id_status`), ADD KEY `created_by` (`created_by`,`updated_by`), ADD KEY `updated_by` (`updated_by`);
 
 --
 -- Indexes for table `tarif`
@@ -305,12 +348,12 @@ ALTER TABLE `tracking`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-MODIFY `id_admin` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_admin` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `kota`
 --
 ALTER TABLE `kota`
-MODIFY `kode_kota` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+MODIFY `kode_kota` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `level_admin`
 --
@@ -320,7 +363,7 @@ MODIFY `id_level` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `pengiriman`
 --
 ALTER TABLE `pengiriman`
-MODIFY `id_pengiriman` int(100) NOT NULL AUTO_INCREMENT;
+MODIFY `id_pengiriman` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `provinsi`
 --
@@ -335,7 +378,7 @@ MODIFY `id_status` int(1) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `tarif`
 --
 ALTER TABLE `tarif`
-MODIFY `id_tarif` int(10) NOT NULL AUTO_INCREMENT;
+MODIFY `id_tarif` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tracking`
 --
@@ -349,7 +392,10 @@ MODIFY `id_tracking` int(100) NOT NULL AUTO_INCREMENT;
 -- Constraints for table `admin`
 --
 ALTER TABLE `admin`
-ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`level`) REFERENCES `level_admin` (`id_level`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`level`) REFERENCES `level_admin` (`id_level`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `admin_ibfk_2` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `admin_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `admin_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kota`
@@ -359,6 +405,14 @@ ADD CONSTRAINT `kota_ibfk_1` FOREIGN KEY (`kode_provinsi`) REFERENCES `provinsi`
 ADD CONSTRAINT `kota_ibfk_2` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`) ON DELETE NO ACTION ON UPDATE CASCADE,
 ADD CONSTRAINT `kota_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
 ADD CONSTRAINT `kota_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `level_admin`
+--
+ALTER TABLE `level_admin`
+ADD CONSTRAINT `level_admin_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `level_admin_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `level_admin_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pengiriman`
@@ -380,12 +434,21 @@ ADD CONSTRAINT `provinsi_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `admin` (
 ADD CONSTRAINT `provinsi_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
+-- Constraints for table `status`
+--
+ALTER TABLE `status`
+ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `status_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
 -- Constraints for table `tarif`
 --
 ALTER TABLE `tarif`
 ADD CONSTRAINT `tarif_ibfk_1` FOREIGN KEY (`status`) REFERENCES `status` (`id_status`) ON DELETE NO ACTION ON UPDATE CASCADE,
 ADD CONSTRAINT `tarif_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
-ADD CONSTRAINT `tarif_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ADD CONSTRAINT `tarif_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id_admin`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `tarif_ibfk_4` FOREIGN KEY (`kota_asal`) REFERENCES `kota` (`kode_kota`) ON DELETE NO ACTION ON UPDATE CASCADE,
+ADD CONSTRAINT `tarif_ibfk_5` FOREIGN KEY (`kota_tujuan`) REFERENCES `kota` (`kode_kota`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tracking`

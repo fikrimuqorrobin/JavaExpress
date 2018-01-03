@@ -15,7 +15,7 @@
     
     <bean id="emf"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="JavaExpressPU"></property>
+        <property name="persistenceUnitName" value="WebBiasaPU"></property>
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>            
     </bean>
     
