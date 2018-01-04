@@ -33,6 +33,7 @@ public class CekTarifController {
     public String halamanIndex(Model model) {
         CekTarifFormBean tarifFormBean = new CekTarifFormBean();
         List<Kota> kotas = dao.findAllKota();
+        tarifFormBean.setBeratBarang(1);
         model.addAttribute("kota", kotas);
         model.addAttribute("cekTarif", tarifFormBean);
         return "cektarif";
