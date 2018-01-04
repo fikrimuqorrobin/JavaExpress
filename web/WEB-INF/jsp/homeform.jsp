@@ -30,7 +30,7 @@
 
             }
             .form-style-10{
-                max-width:450px;
+                max-width:800px;
                 padding:30px;
                 margin:40px auto;
                 background: #FFF;
@@ -165,7 +165,7 @@
                             <input type="text" name="search" placeholder="Masukkan No.Resi">
 
                         </form>
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <a href="${pageContext.request.contextPath}/Tracking"><button><i class="fa fa-search"></i></button></a>
                     </div>
 
                     <div class="section">Simulasi</div>
@@ -180,7 +180,7 @@
                             <input type="text" name="search" placeholder="Berat">
                         </form>
 
-                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <a href="${pageContext.request.contextPath}/simulasi"><button><i class="fa fa-search"></i></button></a>
                     </div>
 
                 </form>

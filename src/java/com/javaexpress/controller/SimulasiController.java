@@ -16,4 +16,9 @@ public class SimulasiController {
         return "simulasi";
     }
     
+    @RequestMapping("/simulasiresult")
+    public String simulasiResultPage(Model model){
+        return "simulasiresult";
+    }
+    
 }

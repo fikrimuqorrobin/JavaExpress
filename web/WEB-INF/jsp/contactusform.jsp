@@ -12,11 +12,11 @@
         </div>
         <div class="container bg-3">
             <div class="jumbotron" style="background-color: whitesmoke">
-                <h2 class="text-center"><i class="fa fa-building"></i><b> Check Our Office</b></h2>
+                <h2 class="text-center"><i class="fa fa-building"></i><b> Check Our Offices</b></h2>
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    <h3><i class="fa fa-map-marker"></i><b> Head Office</b></h3>
+                    <h3><i class="fa fa-map-marker"></i><b> Branch Office</b></h3>
                     <p>Jalan Sendirian Aja</p>
                     <p>Bekasi, 17540</p>
                     <p>Indonesia</p><br>
@@ -36,7 +36,7 @@
                     <!--<img src="birds1.jpg" class="img-responsive margin" style="width:100%" alt="Image">-->
                 </div>
                 <div class="col-sm-4">
-                    <h3><i class="fa fa-map-marker"></i><b> Head Office</b></h3>
+                    <h3><i class="fa fa-map-marker"></i><b> Branch Office</b></h3>
                     <p>Jalan in Aja Dulu</p>
                     <p>Karawang, 24543</p>
                     <p>Indonesia</p><br>

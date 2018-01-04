@@ -2,10 +2,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Tracking - JavaExpress</title>
         <link rel="icon" href="https://cdn3.iconfinder.com/data/icons/purchases-and-sales/512/transpo.png">
-        <title>JSP Page</title>
     </head>
     <style> 
         input[type=text] {
@@ -39,6 +40,7 @@
             border: 1px solid transparent; /* No more visible border */
             height: 30px; 
             transition: all 0.3s;  /* Simple transition for hover effect */
+            text-align: center;
         }
 
         th {  
@@ -50,7 +52,7 @@
 
         td {  
             background: #FAFAFA;
-            text-align: center;
+
         }
 
         /* Cells in even rows (2,4,6...) are one color */        
@@ -63,22 +65,55 @@
         /* Hover cell effect! */
 
     </style>
-</head>
-<body>
 
+    <body>
+        <jsp:include page="header.jsp"/>
 
+        <div class="container">
+            <p>Tracking</p>
+            <form>
+                <input type="text" name="search" placeholder="Masukkan No.Resi">
 
-    <div class="container">
-        <p>Tracking</p>
-        <form>
-            <input type="text" name="search" placeholder="Masukkan No.Resi">
+            </form>
+            <button type="submit"><i class="fa fa-search"></i></button> <br><br><br><br>
 
-        </form>
-        <a href="${pageContext.request.contextPath}/Tracking/trackingresult"><button type="submit"><i class="fa fa-search"></i></button></a> <br><br><br><br>
+            <table>
+                <tr>
+                    <th style="text-align:center">No Resi</th>
+                    <th style="text-align:center">Services</th>
+                    <th style="text-align:center">Date of Shipment</th>
+                    <th style="text-align:center">Origin</th>
+                    <th style="text-align:center">Destination</th>
 
-        
-        
+                <c:forEach var="d" items="">
+                    </tr>
+                    <tr>
+                        <td>nomorresi</td>
+                        <td>kodepaket</td>
+                        <td>tglpengiriman</td>
+                        <td>kotaasal</td>
+                        <td>kotatujuan</td>
+                    </tr>
+                </c:forEach>
+            </table> <br><br><br>
 
-    </div>
-</body>
+            <table>
+                <tr>
+                    <th style="text-align:center">History</th>
+                    <th style="text-align:center"></th>
+
+                <c:forEach var="d" items="">
+                    </tr>
+                    <tr>
+                        <td>waktu</td>
+                        <td>keterangan</td>
+                    </tr>
+                </c:forEach>
+            </table>
+
+        </div>
+
+        <jsp:include page="footer.jsp"/>
+    </body>
+
 </html>

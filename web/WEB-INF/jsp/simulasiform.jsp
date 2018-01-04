@@ -40,7 +40,7 @@
                 <input type="text" name="search" placeholder="Berat">
             </form>
             
-            <button type="submit"><i class="fa fa-search"></i></button>
+            <a href="${pageContext.request.contextPath}/simulasi/simulasiresult"><button type="submit"><i class="fa fa-search"></i></button></a>
         </div>
     </body>
 </html>

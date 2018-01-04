@@ -16,4 +16,10 @@ public class TrackingController {
         return Tracking;
     }
     
+    @RequestMapping("/trackingresult")
+    public String trackingResultPage(Model model){
+        String Tracking = null;
+        return "trackingresult";
+    }
+    
 }
