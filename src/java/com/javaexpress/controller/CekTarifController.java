@@ -5,7 +5,7 @@
  */
 package com.javaexpress.controller;
 
-import com.javaexpress.controller.bean.CekTarifFormBean;
+import com.javaexpress.bean.CekTarifFormBean;
 import com.javaexpress.dao.CekTarifDAO;
 import com.javaexpress.model.Kota;
 import com.javaexpress.model.Pengiriman;
