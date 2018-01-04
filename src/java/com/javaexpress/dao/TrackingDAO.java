@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Transactional
-public class TrackingDAO {
+public class TrackingDAO implements TrackingDAOInterface {
 
     /**
      * @return the em
@@ -49,21 +49,23 @@ public class TrackingDAO {
 
     public Pengiriman findbyNoResi(String NoResi) {
         Pengiriman pengiriman = null;
+       
         try {
             em = emf.createEntityManager();
             Query query = em.createQuery("Select p from Pengiriman p where p.noResi = :NoResi");
             query.setParameter("NoResi", NoResi);
             pengiriman = (Pengiriman) query.getSingleResult();
-        } catch (NoResultException nre) {
-            logger.severe("No Resi Tidak Ada "+nre.getMessage());
+           } catch (NoResultException nre) {
+            logger.severe("No Resi Tidak Ada " + nre.getMessage());
         }
         return pengiriman;
     }
 
     public List<Tracking> tampilListNoResi() {
         em = emf.createEntityManager();
-        List<Tracking> tracking = em.createNamedQuery("Pengiriman.findAll").getResultList();
-        return tracking;
+        List<Tracking> listTracking;
+        listTracking = this.em.createNamedQuery("Tracking.findAll").getResultList();
+        return listTracking;
     }
 
     public Tracking findByResiID(Integer id_tracking) {
@@ -72,16 +74,21 @@ public class TrackingDAO {
     }
 
     public Status findStatusByNoResi(Integer id_status) {
-        em = emf.createEntityManager();
+        em = emf.createEntityManager(); 
         return em.find(Status.class, id_status);
     }
 
-    public List<Tracking> findbyNoResi() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Tracking findTrackingByID(int id_pengiriman) {
+        em = emf.createEntityManager();
+        return em.find(Tracking.class, id_pengiriman);
     }
-    
-    public Tracking findTrackingByID( int id_pengiriman){
-         em = emf.createEntityManager();
-         return em.find(Tracking.class, id_pengiriman);
+
+    @Override
+    public void updateTracking(Tracking tracking) {
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(tracking);
+        em.getTransaction().commit();
+        em.close();
     }
 }

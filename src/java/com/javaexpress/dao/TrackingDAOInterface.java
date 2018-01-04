@@ -13,10 +13,16 @@ import java.util.List;
  * @author user
  */
 public interface TrackingDAOInterface {
-    
-    public void updateTracking (Tracking tracking);
-    
-    public List<Tracking> findNoTracking();
-    
-    public Tracking findByID(int id_tracking);
+
+    public void updateTracking(Tracking tracking);
+
+    public Tracking findByResiID(Integer id_tracking);
+
+    public List<Tracking> tampilListNoResi();
+
+    public Pengiriman findbyNoResi(String NoResi);
+
+    public Status findStatusByNoResi(Integer id_status);
+
+    public Tracking findTrackingByID(int id_pengiriman);
 }

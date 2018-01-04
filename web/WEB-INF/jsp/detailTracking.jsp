@@ -43,7 +43,7 @@
                    
                         <td>${s.count}</td>
                         <td>
-                           "${w.getCreatedTime()}"
+                           ${w.getCreatedTime()}
                         </td>
                         <td>${w.getStatusPengiriman()}</td>
                     <tr>

@@ -107,6 +107,13 @@ public class AdminController {
         model.addAttribute("tracking", tracking);
         return "tracking";
     }
+    @RequestMapping(value="/tracking/all")
+    public String allTracking (Model model){
+        List<Tracking>  listTracking = tdao.tampilListNoResi();
+        model.addAttribute("list", listTracking);
+        model.addAttribute("listUkuran", listTracking.size());
+        return "listTracking";
+    }
     
     @RequestMapping(value = "/tracking/find")
     public String trackingFind (@ModelAttribute("trackingBean")TrackingBean trackingBean, Model model){
