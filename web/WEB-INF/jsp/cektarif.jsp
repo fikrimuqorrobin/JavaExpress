@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>Cek Tarif</h1>
-        <form:form action="cektarif/tarif" modelAttribute="cekTarif" method="POST">
+        <form:form action="${pageContext.request.contextPath}/cektarif/tarif" modelAttribute="cekTarif" method="POST">
              <form:select path="kotaAsal">
                 <c:forEach var="c" items="${kota}">
                     <form:option path="kotaAsal" value="${c.kodeKota}"> ${c.namaKota}</form:option>
@@ -29,6 +29,12 @@
             <form:input path="beratBarang"/>kg
             <form:button name="submitButton" value="submit">Cari</form:button>
              </form:form>
-           
+            
+            <%
+                if(request.getAttribute("cek").equals("")){
+                } else {
+            %>
+            <jsp:include page="detailtarif.jsp"></jsp:include>
+            <% } %>
     </body>
 </html>

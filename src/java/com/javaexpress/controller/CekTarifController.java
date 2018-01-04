@@ -36,24 +36,28 @@ public class CekTarifController {
         tarifFormBean.setBeratBarang(1);
         model.addAttribute("kota", kotas);
         model.addAttribute("cekTarif", tarifFormBean);
+        model.addAttribute("cek", "");
         return "cektarif";
     }
-    
+
     @RequestMapping(value = "/tarif")
-    public String tarif(@ModelAttribute("cekTarif") CekTarifFormBean tarifFormBean, Model model){
-            Tarif tarif = new Tarif();
-            Kota kotaAsal = new Kota();
-            Pengiriman pengiriman = new Pengiriman();
-            pengiriman.setBeratBarang(tarifFormBean.getBeratBarang());
-            kotaAsal = dao.findKotaById(tarifFormBean.getKotaAsal());
-            Kota kotaTujuan = new Kota();
-            kotaTujuan = dao.findKotaById(tarifFormBean.getKotaTujuan());
-            tarif = dao.findTarifByIdKota(kotaAsal,kotaTujuan);
-            model.addAttribute("berat",pengiriman);
-            model.addAttribute("kotaAsal", kotaAsal);
-            model.addAttribute("kotaTujuan",kotaTujuan);
-            model.addAttribute("tarif", tarif);
-        return "detailtarif";
+    public String tarif(@ModelAttribute("cekTarif") CekTarifFormBean tarifFormBean, Model model) {
+        List<Kota> kotas = dao.findAllKota();
+        model.addAttribute("kota", kotas);
+        Tarif tarif = new Tarif();
+        Kota kotaAsal = new Kota();
+        Pengiriman pengiriman = new Pengiriman();
+        pengiriman.setBeratBarang(tarifFormBean.getBeratBarang());
+        kotaAsal = dao.findKotaById(tarifFormBean.getKotaAsal());
+        Kota kotaTujuan = new Kota();
+        kotaTujuan = dao.findKotaById(tarifFormBean.getKotaTujuan());
+        tarif = dao.findTarifByIdKota(kotaAsal, kotaTujuan);
+        model.addAttribute("berat", pengiriman);
+        model.addAttribute("kotaAsal", kotaAsal);
+        model.addAttribute("kotaTujuan", kotaTujuan);
+        model.addAttribute("tarif", tarif);
+        model.addAttribute("cek", "ada");
+
+        return "cektarif";
     }
 }
-
